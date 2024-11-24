@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# RSYNC scripts will do:
+# - deploy FILE CHANGES & NEW FILES/DIRECTORIES
+# - NOT TOUCH PERMISSIONS on files
+# - NOT DELETE EXTRANEOUS FILES (that are existing on SERVER but not on LOCAL)
+# ALSO, it will excludes LOCAL CACHES, ASSETS and CONFIG FILES. See .rsync_exclude file for more.
+
+# IMPORTANT NOTE:
+# ==========================
+# This is a deployment script for NuxtJS to target = `server` mode!
+# @see: https://nuxtjs.org/docs/get-started/commands/#target-server-default-value
+
+# Prepare to launch
+echo "Prepare to launch"
+echo "========================="
+echo ""
+
+echo "- Cleaning up a bit"
+rm -rf ./dist
+echo ""
+
+confirm "Do you want to rebuild NPM packages?"
+if [ $? -eq 1 ]
+then
+  rm -rf ./node_modules
+  echo "- Rebuilding packages"
+  npm install
+  echo ""
+fi
+
+echo ""
+echo ""
+
+echo "Deploy to zrinszki server: 45.10.94.150 (zrinszki.hu)"
+echo ""
+npm run build
+#rsync -rvpzh --checksum --no-perms --itemize-changes --exclude-from=.rsync_exclude ./dist/ /home/web/zrinszki.hu
+echo ""
+echo ""

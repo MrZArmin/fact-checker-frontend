@@ -1,0 +1,51 @@
+i.icon,
+div.icon {
+  display: inline-block;
+  mask-position: center center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+
+  background: no-repeat;
+  background-color: $black;
+  height: 18px;
+  width: 18px;
+
+  // Colors
+
+  &.white {
+    background-color: $white;
+  }
+  &.black {
+    background-color: $black;
+  }
+
+
+  // Icons
+
+  &.loader {
+    mask-image: url('@/assets/img/icons/loader.svg');
+  }
+  &.plus {
+    mask-image: url('@/assets/img/icons/plus.svg');
+  }
+}
+
+a.icon-wrapper .badge {
+  cursor: pointer;
+}
+
+.icon-wrapper {
+  height: 24px;
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.logo-inline {
+  display: block;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
