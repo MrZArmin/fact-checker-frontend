@@ -18,7 +18,10 @@ div.icon {
   &.black {
     background-color: $black;
   }
-
+  &.large{
+    height: 36px;
+    width: 36px;
+  }
 
   // Icons
 
@@ -27,6 +30,15 @@ div.icon {
   }
   &.plus {
     mask-image: url('@/assets/img/icons/plus.svg');
+  }
+  &.exit {
+    mask-image: url('@/assets/img/icons/exit.svg');
+  }
+  &.add {
+    mask-image: url('@/assets/img/icons/add.svg');
+  }
+  &.logo {
+    mask-image: url('@/assets/img/icons/logo.svg');
   }
 }
 

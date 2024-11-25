@@ -1,8 +1,5 @@
 <template>
   <div class="main-content">
-    <div class="stars"></div>
-    <div class="stars2"></div>
-    <div class="stars3"></div>
     <RouterView />
   </div>
 </template>
