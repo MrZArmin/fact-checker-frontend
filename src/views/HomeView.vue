@@ -1,29 +1,46 @@
 <template>
   <div class="home">
-    <Sidebar v-if="isSidebarOpen" @hide-sidebar="handleHideSidebar" @add-new-conversation="handleAddNewConversation" :items=history />
-    <Conversation :loading="false" :conversation="conv" />
+    <Sidebar @logout="handleLogout" @add-new-conversation="handleAddNewConversation" @open-chat="handleOpenChat" :items=history />
+    <Conversation :loading="true" :answer="conv" />
   </div>
 </template>
 <script setup>
   import Sidebar from '@/components/Sidebar.vue';
   import Conversation from '@/components/Conversation.vue';
-  const history = ['asdasdsasadsadasdsadsaddadsadsaddadsadsaddadsadsadda', 'asdasdsasadsadsadsaddadsadsaddadsadsaddadasdsadsadda', 'asdadsadsaddadsadsaddasdsasadsadasdsadsadda', 'asdasdsasadsadasdsadsadda', 'asdasdsasadsadasdsadsadda', 'asdasdsasadsadasdsadsadda', 'asdasdsasadsadasdsadsadda', 'asdasdsasadsadasdsadsadda', 'asdasdsasadsadasdsadsadda', 'asdasdsasadsadasdsadsadda', 'asdasdsasadsadasdsadsadda', 'asdasdsasadsadasdsadsadda', 'asdasdsasadsadasdsadsadda', 'asdasdsasadsadasdsadsadda', 'asdasdsasadsadasdsadsadda', 'asdasdsasadsadasdsadsadda', 'asdasdsasadsadasdsadsadda', 'asdasdsasadsadasdsadsadda', 'asdasdsasadsadasdsadsadda', 'asdasdsasadsadasdsadsadda'];
-  const conv = {
-    '1':"What services do you offer?",
-    '2':"We provide AI and software development services.",
-    '3':"Can you elaborate on the AI services?",
-    '4':"Sure, we specialize in machine learning, natural language processing, and computer vision.",
-    '5':"Are you loading?"
-  }
+  const history = [
+    { id: 1, text: 'asdasdsasadsadasdsadsaddadsadsaddadsadsaddadsadsadda' },
+    { id: 2, text: 'asdasdsasadsadsadsaddadsadsaddadsadsaddadasdsadsadda' },
+    { id: 3, text: 'asdadsadsaddadsadsaddasdsasadsadasdsadsadda' },
+    { id: 4, text: 'asdasdsasadsadasdsadsadda' },
+    { id: 5, text: 'asdasdsasadsadasdsadsadda' },
+    { id: 6, text: 'asdasdsasadsadasdsadsadda' },
+    { id: 7, text: 'asdasdsasadsadasdsadsadda' },
+    { id: 8, text: 'asdasdsasadsadasdsadsadda' },
+    { id: 9, text: 'asdasdsasadsadasdsadsadda' },
+    { id: 10, text: 'asdasdsasadsadasdsadsadda' },
+    { id: 11, text: 'asdasdsasadsadasdsadsadda' },
+    { id: 12, text: 'asdasdsasadsadasdsadsadda' },
+    { id: 13, text: 'asdasdsasadsadasdsadsadda' },
+    { id: 14, text: 'asdasdsasadsadasdsadsadda' },
+    { id: 15, text: 'asdasdsasadsadasdsadsadda' },
+    { id: 16, text: 'asdasdsasadsadasdsadsadda' },
+    { id: 17, text: 'asdasdsasadsadasdsadsadda' },
+    { id: 18, text: 'asdasdsasadsadasdsadsadda' },
+    { id: 19, text: 'asdasdsasadsadasdsadsadda' },
+    { id: 20, text: 'asdasdsasadsadasdsadsadda' }
+  ];
+  const conv = "I can validate factual data"
 
-  const isSidebarOpen = true;
-
-  const handleHideSidebar = () => {
-    console.log("hiding sidebar");
+  const handleLogout = () => {
+    console.log("logging out");
   };
 
   const handleAddNewConversation = () => {
     console.log("adding new conversation");
+  };
+
+  const handleOpenChat = (id) => {
+    console.log("opening chat id: ", id);
   };
 
 </script>

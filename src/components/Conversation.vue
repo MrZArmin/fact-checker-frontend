@@ -3,13 +3,13 @@
     <div class="conversation-wrapper">
       <ol>
         <li
-          v-for="(value, key) in conversation"
-          :key="key"
-          :class="parseInt(key) % 2 === 0 ? 'ai-text' : 'user-text'"
+          v-for="(value, index) in conv"
+          :key="index"
+          :class="index % 2 === 1 ? 'ai-text' : 'user-text'"
         >
           {{ value }}
         </li>
-        <li><i class="icon loading white large ai-text" /></li>
+        <li v-if="loading"><i class="icon loading white large ai-text" /></li>
       </ol>
     </div>
   </div>
@@ -17,9 +17,19 @@
 
 <script setup>
 
+import { ref, watch } from 'vue';
+
+const conv = ref(['Who are you?', 'I am a fact checker AI', 'Who are you?', 'I am a fact checker AI', 'Who are you?', 'I am a fact checker AI', 'Who are you?', 'I am a fact checker AI', 'Who are you?', 'I am a fact checker AI', 'Who are you?', 'I am a fact checker AI', 'Who are you?', 'I am a fact checker AI', 'Who are you?', 'I am a fact checker AI', 'What can you do?']);
+
 const props = defineProps({
   loading: Boolean,
-  conversation: Object
+  answer: String
+});
+
+watch(() => props.loading, (newVal) => {
+  if (!newVal) {
+    conv.value.push(props.answer)
+  }
 });
 
 </script>
