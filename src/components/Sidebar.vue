@@ -15,7 +15,7 @@
     <div class="sidebar-history">
       <ul>
         <li v-for="item in items" :key="item">
-          {{ item.length > 30 ? item.slice(0, 30) + '...' : item }}
+          {{ item.length > 22 ? item.slice(0, 22) + '...' : item }}
         </li>
       </ul>
     </div>

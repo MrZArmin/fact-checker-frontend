@@ -40,6 +40,10 @@ div.icon {
   &.logo {
     mask-image: url('@/assets/img/icons/logo.svg');
   }
+  &.loading {
+    mask-image: url('@/assets/img/icons/loading.svg');
+    animation: spin 1s linear infinite;
+  }
 }
 
 a.icon-wrapper .badge {
@@ -60,4 +64,13 @@ a.icon-wrapper .badge {
   background-position: center center;
   background-repeat: no-repeat;
   background-size: contain;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
