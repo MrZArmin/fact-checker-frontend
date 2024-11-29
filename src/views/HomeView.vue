@@ -7,7 +7,6 @@
 <script setup>
   import Sidebar from '@/components/Sidebar.vue';
   import Conversation from '@/components/Conversation.vue';
-  import Input from '@/components/Input.vue';
 
   const history = [
     { id: 1, text: 'asdasdsasadsadasdsadsaddadsadsaddadsadsaddadsadsadda' },

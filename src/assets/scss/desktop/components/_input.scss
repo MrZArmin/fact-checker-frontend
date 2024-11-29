@@ -1,8 +1,10 @@
   .input {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50%;
+    position: sticky;
+    bottom: 0;
+    width: 50%; /* Matches .conversation-wrapper */
+    margin: 0 auto; /* Centers input */
+    z-index: 10; /* Ensures it stays above conversation content */
+
     .input-container{
 
       .input-text{
