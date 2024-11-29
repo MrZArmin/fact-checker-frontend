@@ -1,0 +1,19 @@
+  .input {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    .input-container{
+
+      .input-text{
+        border-radius: 20px;
+        padding: 10px 20px;
+        margin: 10px 0px;
+        resize: none;
+        border: none;
+        overflow: hidden;
+        background-color: #3b3b3b;
+        color: white;
+      }
+    }
+  }

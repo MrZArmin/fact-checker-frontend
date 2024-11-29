@@ -12,13 +12,14 @@
         <li v-if="loading"><i class="icon loading white large ai-text" /></li>
       </ol>
     </div>
+    <Input/>
   </div>
 </template>
 
 <script setup>
 
 import { ref, watch } from 'vue';
-
+import Input from '@/components/Input.vue';
 const conv = ref(['Who are you?', 'I am a fact checker AI', 'Who are you?', 'I am a fact checker AI', 'Who are you?', 'I am a fact checker AI', 'Who are you?', 'I am a fact checker AI', 'Who are you?', 'I am a fact checker AI', 'Who are you?', 'I am a fact checker AI', 'Who are you?', 'I am a fact checker AI', 'Who are you?', 'I am a fact checker AI', 'What can you do?']);
 
 const props = defineProps({

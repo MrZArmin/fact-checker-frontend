@@ -1,12 +1,14 @@
 <template>
   <div class="home">
     <Sidebar @logout="handleLogout" @add-new-conversation="handleAddNewConversation" @open-chat="handleOpenChat" :items=history />
-    <Conversation :loading="true" :answer="conv" />
+    <Conversation :loading="false" :answer="conv" />
   </div>
 </template>
 <script setup>
   import Sidebar from '@/components/Sidebar.vue';
   import Conversation from '@/components/Conversation.vue';
+  import Input from '@/components/Input.vue';
+
   const history = [
     { id: 1, text: 'asdasdsasadsadasdsadsaddadsadsaddadsadsaddadsadsadda' },
     { id: 2, text: 'asdasdsasadsadsadsaddadsadsaddadsadsaddadasdsadsadda' },
