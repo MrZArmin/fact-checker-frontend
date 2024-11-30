@@ -4,25 +4,13 @@
       <div class="auth-content">
         <h2>Lépj be</h2>
         <div class="auth-form">
-          <input 
-            v-model="email"
-            class="auth-form-input" 
-            type="text" 
-            placeholder="Email" 
-          />
-          <input
-            v-model="password"
-            class="auth-form-input"
-            type="password"
-            placeholder="Password"
-          />
+          <input v-model="email" class="auth-form-input" type="text" placeholder="Email" />
+          <input v-model="password" class="auth-form-input" type="password" placeholder="Password" />
           <button class="auth-form-button" @click="submit()">
             <i class="icon loader" v-if="loading"></i>
             <span v-else>Belépés</span>
           </button>
-          <router-link to="/auth/register" class="auth-form-link"
-            >Elfelejtett jelszó</router-link
-          >
+          <router-link to="/auth/register" class="auth-form-link">Elfelejtett jelszó</router-link>
         </div>
       </div>
     </div>
@@ -37,7 +25,6 @@ import { isValidEmail } from '@/utils/validators';
 import { toast } from 'vue3-toastify';
 
 const loading = ref(false);
-
 const email = ref('');
 const password = ref('');
 const isLoading = ref(false);

@@ -1,7 +1,8 @@
 <template>
   <div class="sidebar">
     <div class="sidebar-icons">
-      <i @click="handleLogout" class="icon exit white large" /><i @click="handleAddNewConversation" class="icon add white large" />
+      <i @click="handleLogout" class="icon exit white large" /><i @click="handleAddNewConversation"
+        class="icon add white large" />
     </div>
     <div class="sidebar-title">
       <i class="icon logo white large" />
@@ -15,7 +16,7 @@
     <div class="sidebar-history">
       <ul>
         <li @click="handleOpenChat(item.id)" v-for="item in items" :key="item.id">
-          {{ item.text.length > 22 ? item.text.slice(0, 22) + '...' : item.text }}
+          {{ item.text }}
         </li>
       </ul>
     </div>

@@ -18,7 +18,7 @@ div.icon {
   &.black {
     background-color: $black;
   }
-  &.large{
+  &.large {
     height: 36px;
     width: 36px;
   }
@@ -43,6 +43,9 @@ div.icon {
   &.loading {
     mask-image: url('@/assets/img/icons/loading.svg');
     animation: spin 1s linear infinite;
+  }
+  &.send {
+    mask-image: url('@/assets/img/icons/send.svg');
   }
 }
 

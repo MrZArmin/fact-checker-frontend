@@ -2,7 +2,7 @@
   position: relative;
   width: 83%;
   overflow-y: auto;
-  .conversation-wrapper{
+  .conversation-wrapper {
     width: 50%;
     margin: 5% auto 5% auto;
   }
@@ -14,7 +14,7 @@
 
     li {
       padding: 10px 20px;
-      margin: 10px 5px;
+      margin: 5px 10px;
       border-radius: 20px;
       max-width: 70%;
       word-wrap: break-word;
