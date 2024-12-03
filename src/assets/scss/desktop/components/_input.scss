@@ -21,6 +21,11 @@
       overflow: hidden;
       background-color: #3b3b3b;
       color: white;
+
+      ::placeholder{
+        font-style: italic;
+        color: red;
+      }
     }
 
     .icon-container{

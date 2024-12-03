@@ -1,7 +1,7 @@
 <template>
   <div class="input">
     <div class="input-container">
-      <textarea v-model="text" class="input-text"></textarea>
+      <textarea v-model="text" class="input-text" placeholder="Mit szeretnél megtudni?"></textarea>
       <div class="icon-container">
         <i @click="handleSend" class="icon send white large" />
       </div>

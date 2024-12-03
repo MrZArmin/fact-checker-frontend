@@ -3,7 +3,12 @@
     <Sidebar @logout="handleLogout" @add-new-conversation="handleAddNewConversation" @open-chat="handleOpenChat"
       :items=history />
     <Conversation v-if="!isEmpty" :loading="isLoading" :conversation="conv" />
-    <Input v-else @send="handleSend" />
+    <div v-else class="home-input-container">
+      <div class="home-title">
+        Mit szeretnél megtudni?
+      </div>
+      <Input @send="handleSend" />
+    </div>
   </div>
 </template>
 <script setup>

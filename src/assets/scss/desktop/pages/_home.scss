@@ -10,16 +10,29 @@
     transform: translate(-50%, -50%);
   }
 
-  .input{
+  .home-input-container{
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    position: relative;
-    .input-container{
-      width: 100%;
+    width: 100%;
+
+    .home-title{
+      margin-bottom: 2%;
+      font-size: 200%;
+      font-weight: 500;
     }
 
+    .input{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      position: relative;
+      .input-container{
+        width: 150%;
+      }
+    }
   }
 
 }
