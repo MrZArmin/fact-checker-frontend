@@ -2,8 +2,12 @@
   <div class="conversation">
     <div class="conversation-wrapper">
       <ol>
-        <li v-for="(value, index) in conv" :key="index" :class="index % 2 === 1 ? 'ai-text' : 'user-text'">
-          {{ value }}
+        <li
+          v-for="(message, index) in conv"
+          :key="index"
+          :class="message.type === 'ai' ? 'ai-text' : 'user-text'"
+        >
+          {{ message.text }}
         </li>
         <li v-if="loading"><i class="icon loading white large ai-text" /></li>
       </ol>
@@ -20,17 +24,23 @@ const conv = ref([]);
 
 const props = defineProps({
   loading: Boolean,
-  initial: String
+  conversation: Object
 });
 
-watch(() => props.loading, (newVal) => {
-  console.log(newVal)
-});
+watch(
+  () => props.conversation,
+  (newMessage) => {
+    if (newMessage && newMessage.text) {
+      conv.value.push(newMessage);
+    }
+  },
+  { deep: true, immediate: true }
+);
 
 const handleSend = (text) => {
-  conv.value.push(text);
-  const dummyAiMessage = "ayo niqa";
-  conv.value.push(dummyAiMessage)
+  // conv.value.push(text);
+  // const dummyAiMessage = "ayo niqa";
+  // conv.value.push(dummyAiMessage)
 };
 
 </script>

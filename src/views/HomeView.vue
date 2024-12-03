@@ -2,8 +2,8 @@
   <div class="home">
     <Sidebar @logout="handleLogout" @add-new-conversation="handleAddNewConversation" @open-chat="handleOpenChat"
       :items=history />
-    <Conversation v-if="!isEmpty" :loading="isLoading" :initial="conv" />
-    <Input  v-else @send="handleSend" />
+    <Conversation v-if="!isEmpty" :loading="isLoading" :conversation="conv" />
+    <Input v-else @send="handleSend" />
   </div>
 </template>
 <script setup>
@@ -38,7 +38,7 @@ const history = [
 ];
 
 let isLoading = ref(false);
-let conv = ref("");
+let conv = ref({ type: '', text: '' });
 let isEmpty = ref(true);
 
 const handleLogout = () => {
@@ -53,10 +53,27 @@ const handleOpenChat = (id) => {
   console.log("opening chat id: ", id);
 };
 
-const handleSend = (text) => {
+const handleSend = async (prompt) => {
+  // Show the user's prompt first
+  conv.value = { type: 'user', text: prompt };
   isEmpty.value = false;
-  conv.value = text;
+
+  // Simulate loading state for AI response
   isLoading.value = true;
+
+  // Wait for response
+  await new Promise((resolve) => setTimeout(resolve, 500)); // Simulate delay
+  const answer = apiResponse(prompt);
+
+  // Update with the AI's response
+  conv.value = { type: 'ai', text: answer };
+  isLoading.value = false;
 };
+
+const apiResponse = (prompt) => {
+  const answer = "sasageyo";
+  return answer;
+}
+
 
 </script>
