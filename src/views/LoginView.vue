@@ -7,7 +7,7 @@
           <input v-model="email" class="auth-form-input" type="text" placeholder="Email" />
           <input v-model="password" class="auth-form-input" type="password" placeholder="Password" />
           <button class="auth-form-button" @click="submit()">
-            <i class="icon loader" v-if="loading"></i>
+            <i v-if="loading" class="icon loader"></i>
             <span v-else>Belépés</span>
           </button>
           <router-link to="/auth/register" class="auth-form-link">Elfelejtett jelszó</router-link>

@@ -1,8 +1,14 @@
 <template>
   <div class="sidebar">
     <div class="sidebar-icons">
-      <i @click="handleLogout" class="icon exit white large" /><i @click="handleAddNewConversation"
-        class="icon add white large" />
+      <i 
+        @click="handleLogout" 
+        class="icon exit white large" 
+        />
+      <i
+        @click="handleAddNewConversation"
+        class="icon add white large"
+      />
     </div>
     <div class="sidebar-title">
       <i class="icon logo white large" />
@@ -15,7 +21,11 @@
     </div>
     <div class="sidebar-history">
       <ul>
-        <li @click="handleOpenChat(item.id)" v-for="item in items" :key="item.id">
+        <li
+          v-for="item in items"
+          :key="item.id"
+          @click="handleOpenChat(item.id)"
+        >
           {{ item.text }}
         </li>
       </ul>
@@ -24,7 +34,6 @@
 </template>
 
 <script setup>
-
 const emit = defineEmits(['logout', 'add-new-conversation', 'open-chat']);
 
 const props = defineProps({
@@ -45,5 +54,4 @@ const handleAddNewConversation = () => {
 const handleOpenChat = (id) => {
   emit('open-chat', id);
 };
-
 </script>

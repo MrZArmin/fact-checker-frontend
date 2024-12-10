@@ -1,18 +1,19 @@
 <template>
   <div class="home">
-    <Sidebar @logout="handleLogout" @add-new-conversation="handleAddNewConversation" @open-chat="handleOpenChat"
-      :items=history />
-    <Conversation v-if="!isEmpty" :loading="isLoading" :conversation="conv" />
+    <Sidebar
+      :items="history"
+      @logout="handleLogout"
+      @add-new-conversation="handleAddNewConversation"
+      @open-chat="handleOpenChat"
+    />
+    <Conversation v-if="!isEmpty" :loading="isLoading" :conversation="conv" @send="handleSend"/>
     <div v-else class="home-input-container">
-      <div class="home-title">
-        Mit szeretnél megtudni?
-      </div>
+      <div class="home-title">Mit szeretnél megtudni?</div>
       <Input @send="handleSend" />
     </div>
   </div>
 </template>
 <script setup>
-
 import { ref } from 'vue';
 
 import Sidebar from '@/components/Sidebar.vue';
@@ -39,7 +40,7 @@ const history = [
   { id: 17, text: 'asdasdsasadsadasdsadsadda' },
   { id: 18, text: 'asdasdsasadsadasdsadsadda' },
   { id: 19, text: 'asdasdsasadsadasdsadsadda' },
-  { id: 20, text: 'asdasdsasadsadasdsadsadda' }
+  { id: 20, text: 'asdasdsasadsadasdsadsadda' },
 ];
 
 let isLoading = ref(false);
@@ -47,15 +48,15 @@ let conv = ref({ type: '', text: '' });
 let isEmpty = ref(true);
 
 const handleLogout = () => {
-  console.log("logging out");
+  console.log('logging out');
 };
 
 const handleAddNewConversation = () => {
-  console.log("adding new conversation");
+  console.log('adding new conversation');
 };
 
 const handleOpenChat = (id) => {
-  console.log("opening chat id: ", id);
+  console.log('opening chat id: ', id);
 };
 
 const handleSend = async (prompt) => {
@@ -76,9 +77,8 @@ const handleSend = async (prompt) => {
 };
 
 const apiResponse = (prompt) => {
-  const answer = "sasageyo";
+  console.log('prompt: ', prompt);
+  const answer = 'sasageyo';
   return answer;
-}
-
-
+};
 </script>
