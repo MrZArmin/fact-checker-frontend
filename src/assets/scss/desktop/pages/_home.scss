@@ -1,6 +1,5 @@
 .home {
   height: 100vh;
-  overflow: hidden;
   display: flex;
 
   .title {
@@ -29,10 +28,6 @@
       justify-content: center;
       flex-direction: column;
       position: relative;
-      .input-container{
-        width: 150%;
-      }
     }
   }
-
 }

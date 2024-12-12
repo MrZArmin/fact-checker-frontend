@@ -4,7 +4,8 @@
       :items="history"
       @logout="handleLogout"
       @add-new-conversation="handleAddNewConversation"
-      @open-chat="handleOpenChat"
+      @open-conversation="handleOpenConversation"
+      @delete-conversation="handleDeleteConversation"
     />
     <Conversation v-if="!isEmpty" :loading="isLoading" :conversation="conv" @send="handleSend"/>
     <div v-else class="home-input-container">
@@ -27,7 +28,7 @@ const history = [
   { id: 4, text: 'asdasdsasadsadasdsadsadda' },
   { id: 5, text: 'asdasdsasadsadasdsadsadda' },
   { id: 6, text: 'asdasdsasadsadasdsadsadda' },
-  { id: 7, text: 'asdasdsasadsadasdsadsadda' },
+  { id: 7, text: 'asdasds' },
   { id: 8, text: 'asdasdsasadsadasdsadsadda' },
   { id: 9, text: 'asdasdsasadsadasdsadsadda' },
   { id: 10, text: 'asdasdsasadsadasdsadsadda' },
@@ -55,13 +56,15 @@ const handleAddNewConversation = () => {
   console.log('adding new conversation');
 };
 
-const handleOpenChat = (id) => {
-  console.log('opening chat id: ', id);
+const handleOpenConversation = (id) => {
+  console.log('opening conversation id: ', id);
+};
+
+const handleDeleteConversation = (id) => {
+  console.log('deleting conversation id: ', id);
 };
 
 const handleSend = async (prompt) => {
-  // Show the user's prompt first
-  conv.value = { type: 'user', text: prompt };
   isEmpty.value = false;
 
   // Simulate loading state for AI response

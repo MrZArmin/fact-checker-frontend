@@ -47,6 +47,9 @@ div.icon {
   &.send {
     mask-image: url('@/assets/img/icons/send.svg');
   }
+  &.delete {
+    mask-image: url('@/assets/img/icons/delete.svg');
+  }
 }
 
 a.icon-wrapper .badge {

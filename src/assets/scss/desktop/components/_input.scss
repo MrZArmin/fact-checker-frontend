@@ -1,16 +1,15 @@
 .input {
   position: fixed;
   bottom: 1%;
-  width: 41.5%;
   margin: 0 auto;
   z-index: 10;
 
   .input-container {
+    width: $conversation-width;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 0px 10px;
     padding: 10px;
     background-color: #3b3b3b;
     border-radius: 20px;

@@ -9,6 +9,7 @@
 html {
   -ms-text-size-adjust: 100%; // 2
   -webkit-text-size-adjust: 100%; // 2
+  overflow-y: hidden !important; // scrollbar? a node modules main.css-e elrontja a scrollbart
 }
 
 //
@@ -448,6 +449,22 @@ table {
 td,
 th {
   padding: 0;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $scrollbar-color;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $scrollbar-hover-color;
 }
 
 * {

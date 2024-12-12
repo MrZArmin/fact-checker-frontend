@@ -1,9 +1,9 @@
 <template>
   <div class="sidebar">
     <div class="sidebar-icons">
-      <i 
-        @click="handleLogout" 
-        class="icon exit white large" 
+      <i
+        @click="handleLogout"
+        class="icon exit white large"
         />
       <i
         @click="handleAddNewConversation"
@@ -24,9 +24,13 @@
         <li
           v-for="item in items"
           :key="item.id"
-          @click="handleOpenChat(item.id)"
+          @click="handleOpenConversation(item.id)"
         >
-          {{ item.text }}
+          <div class="sidebar-history-text">{{ item.text }}</div>
+          <i
+            @click="handleDeleteConversation(item.id, $event)"
+            class="icon delete white"
+          />
         </li>
       </ul>
     </div>
@@ -34,7 +38,7 @@
 </template>
 
 <script setup>
-const emit = defineEmits(['logout', 'add-new-conversation', 'open-chat']);
+const emit = defineEmits(['logout', 'add-new-conversation', 'open-conversation', 'delete-conversation']);
 
 const props = defineProps({
   items: {
@@ -51,7 +55,12 @@ const handleAddNewConversation = () => {
   emit('add-new-conversation');
 };
 
-const handleOpenChat = (id) => {
-  emit('open-chat', id);
+const handleOpenConversation = (id) => {
+  emit('open-conversation', id);
+};
+
+const handleDeleteConversation= (id, event) => { //ez így szép?
+  event.stopPropagation();
+  emit('delete-conversation', id);
 };
 </script>

@@ -25,11 +25,6 @@ const emit = defineEmits(['send']);
 const conv = ref([
   { text: "Hello, how are you?" },
   { text: "I'm good, thanks! How about you?", type: "ai" },
-  { text: "I'm doing well, just working on some code." },
-  { text: "Nice! What are you working on?", type: "ai" },
-  { text: "I'm building a chat application." },
-  { text: "That sounds interesting!" },
-  { text: "Yeah, it's a fun project.", type: "ai" },
   { text: "Do you need any help?" },
   { text: "Not right now, but thanks for offering." },
   { text: "No problem! Let me know if you do." },
