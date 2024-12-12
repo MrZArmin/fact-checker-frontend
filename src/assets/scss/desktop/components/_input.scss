@@ -15,6 +15,8 @@
     border-radius: 20px;
 
     .input-text {
+      max-height: 250px;
+      min-height: 30px;
       resize: none;
       border: none;
       overflow: hidden;
@@ -24,6 +26,7 @@
 
     .icon-container{
       width: 100%;
+      margin-top: 10px;
 
       i{
         float: right;

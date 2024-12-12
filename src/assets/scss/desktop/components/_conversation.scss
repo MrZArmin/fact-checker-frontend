@@ -20,20 +20,22 @@
     padding-bottom: 10px;
 
     li {
+      max-width: 70%;
       padding: 10px 20px;
       margin: 5px 0px;
       border-radius: 20px;
-      max-width: 70%;
       word-wrap: break-word;
       color: white;
       font-size: 16px;
     }
 
     .user-text {
+      width: max-content;
       background-color: #3b3b3b;
       margin-left: auto;
       text-align: right;
-    }
+      white-space: pre-wrap;
+      }
 
     .ai-text {
       margin-right: auto;
