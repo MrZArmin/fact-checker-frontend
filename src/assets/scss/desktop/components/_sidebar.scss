@@ -1,6 +1,5 @@
 .sidebar {
-  width: 250px;
-  min-width: 200px;
+  width: $sidebar-width;
   height: 100%;
   background-color: #333333;
   display: flex;
@@ -20,6 +19,7 @@
       cursor: pointer;
     }
   }
+
   .sidebar-title {
     display: flex;
     align-items: center;
@@ -38,21 +38,40 @@
       font-weight: bold;
     }
   }
+
   .sidebar-history-title {
     display: flex;
     align-items: center;
-
-    .line {
-      flex-grow: 1;
-      height: 2px;
-      background: linear-gradient(to right, transparent, #444, transparent);
-      margin: 0 8px;
-    }
+    justify-content: center;
+    position: relative;
 
     div {
       color: white;
       font-size: 18px;
       font-weight: bold;
+      margin: 0 8px;
+      z-index: 1; // Ensure text is above the lines
+    }
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      height: 1px;
+      z-index: 0;
+    }
+
+    &::before {
+      left: 0;
+      right: 70%;
+      background: linear-gradient(to right, transparent, $horzintal-line-color, transparent);
+    }
+
+    &::after {
+      right: 0;
+      left: 70%;
+      background: linear-gradient(to left, transparent, $horzintal-line-color, transparent);
     }
   }
 
@@ -65,7 +84,7 @@
       margin-top: 5%;
 
       li {
-        width: 180px;
+        width: 200px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -89,7 +108,7 @@
           text-overflow: ellipsis;
           pointer-events: none;
           overflow: hidden;
-          width: 150px;
+          width: 180px;
           white-space: nowrap;
           padding: 5px;
           font-size: 15px;

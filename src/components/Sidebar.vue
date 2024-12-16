@@ -15,9 +15,7 @@
       <div>Fact-Checker</div>
     </div>
     <div class="sidebar-history-title">
-      <div class="line"></div>
       <div>History</div>
-      <div class="line"></div>
     </div>
     <div class="sidebar-history">
       <ul>
