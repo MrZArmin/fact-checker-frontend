@@ -7,7 +7,12 @@
           :key="index"
           :class="message.type === 'ai' ? 'ai-text' : 'user-text'"
         >
-          {{ message.text }}
+        <i
+         v-if="message.type === 'ai'"
+         class="icon logo white"
+         >
+        </i>
+        <div class="conversation-text"> {{ message.text }} </div>
         </li>
         <li v-if="loading"><i class="icon loading white large ai-text" /></li>
       </ol>
