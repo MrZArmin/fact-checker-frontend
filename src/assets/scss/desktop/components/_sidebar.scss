@@ -87,6 +87,7 @@
 
         .sidebar-history-text{
           text-overflow: ellipsis;
+          pointer-events: none;
           overflow: hidden;
           width: 150px;
           white-space: nowrap;

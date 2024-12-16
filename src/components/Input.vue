@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const emit = defineEmits(['send']);
 const text = ref('');
@@ -38,16 +38,27 @@ const handleKeydown = (e) => {
 
 const autoResize = () => {
   const el = textarea.value;
-  el.style.height = 'auto';
-  el.style.height = el.scrollHeight + 'px';
-  el.style.overflow = "auto";
+  if(el.value){
+    el.style.height = 'auto';
+    el.style.height = el.scrollHeight + 'px';
+    el.style.overflow = "auto";
+  } else{
+    resizeTextAreaToDefault();
+  }
 };
 
 const resizeTextAreaToDefault = () => {
   const el = textarea.value;
   el.style.height = "30px";
   el.style.overflow = "hidden";
-}
-
+};
 //TODO classokkal megcsinálni, vagy jó így?
+
+//Ez consolera hibát dobál, help!!!
+// onMounted(() => {
+//   textarea.value.focus();
+//   document.addEventListener("keydown", () => {
+//     textarea.value.focus();
+//   })
+// });
 </script>
