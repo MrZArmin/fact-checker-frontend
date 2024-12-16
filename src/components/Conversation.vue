@@ -1,5 +1,5 @@
 <template>
-  <div class="conversation">
+  <div class="conversation" ref="conversation">
     <div class="conversation-wrapper">
       <ol>
         <li
@@ -18,7 +18,7 @@
 
 <script setup>
 
-import { ref, watch } from 'vue';
+import { ref, watch, nextTick } from 'vue';
 import Input from '@/components/Input.vue';
 const emit = defineEmits(['send']);
 
@@ -31,6 +31,8 @@ const conv = ref([
   { text: "Will do! Thanks again." },
   { text: "You're welcome!" }
 ]);
+
+const conversation = ref(null)
 
 const props = defineProps({
   loading: Boolean,
@@ -50,6 +52,13 @@ watch(
 const handleSend = (text) => {
   conv.value.push({ text, type: 'user' });
   emit('send', text);
+  scrollToBottom();
+};
+
+const scrollToBottom = () => {
+  nextTick(() => {
+    conversation.value.scrollTop = conversation.value.scrollHeight;
+  });
 };
 
 </script>
