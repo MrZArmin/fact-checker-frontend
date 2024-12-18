@@ -50,6 +50,9 @@ div.icon {
   &.delete {
     mask-image: url('@/assets/img/icons/delete.svg');
   }
+  &.hamburger {
+    mask-image: url('@/assets/img/icons/hamburger.svg');
+  }
 }
 
 a.icon-wrapper .badge {

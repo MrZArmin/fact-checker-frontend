@@ -9,12 +9,7 @@
 /* Large devices (desktop pcs, notebooks, >= 992px) */
 @import 'desktop';
 
-/* Medium devices (tablets, < 992px) */
+/* Medium and small devices (tablets, < 992px) */
 @media (max-width: ($screen-md - 1)) {
-  @import 'tablet';
-}
-
-/* Small devices (mobiles, < 768px) */
-@media (max-width: ($screen-sm - 1)) {
   @import 'mobile';
 }

@@ -1,11 +1,19 @@
 <template>
-  <div class="home">
+  <div
+    class="home"
+    ref="home"
+  >
+  <i
+    @click="handleToggleSidebar"
+    class="icon hamburger large white">
+  </i>
     <Sidebar
       :items="history"
       @logout="handleLogout"
       @add-new-conversation="handleAddNewConversation"
       @open-conversation="handleOpenConversation"
       @delete-conversation="handleDeleteConversation"
+      ref="sidebar"
     />
     <Conversation v-if="!isEmpty" :loading="isLoading" :conversation="conv" @send="handleSend"/>
     <div v-else class="home-input-container">
@@ -44,6 +52,8 @@ const history = [
   { id: 20, text: 'asdasdsasadsadasdsadsadda' },
 ];
 
+const sidebar = ref(null)
+const home = ref(null)
 let isLoading = ref(false);
 let conv = ref({ type: '', text: '' });
 let isEmpty = ref(true);
@@ -62,6 +72,18 @@ const handleOpenConversation = (id) => {
 
 const handleDeleteConversation = (id) => {
   console.log('deleting conversation id: ', id);
+};
+
+const handleToggleSidebar = () => {
+  const sidebarElement = sidebar.value.$el;
+  const homeElement = home.value;
+  if (sidebarElement.style.display === "block") {
+    sidebarElement.style.display = "none";
+    homeElement.style.display = "flex";
+  } else {
+    sidebarElement.style.display = "block";
+    homeElement.style.display = "block";
+  }
 };
 
 const handleSend = async (prompt) => {

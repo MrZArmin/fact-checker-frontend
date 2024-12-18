@@ -1,0 +1,21 @@
+.sidebar{
+  display: none;
+  width: 100dvw;
+
+  .sidebar-icons {
+    justify-content:flex-start;
+    flex-direction: row-reverse;
+  }
+
+  .sidebar-history {
+    ul {
+      li {
+        width: 90dvw;
+        .sidebar-history-text{
+          width: 80dvw;
+        }
+      }
+    }
+  }
+}
+
