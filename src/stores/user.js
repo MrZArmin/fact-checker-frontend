@@ -18,10 +18,10 @@ export const useUserStore = defineStore('user', {
   getters: {
     theAccount: (state) => state.account,
     theToken: (state) => {
-      // Move cookie initialization inside the getter
-      const cookies = useCookies();
-      const token = cookies.get(COOKIE_BEARER_TOKEN_KEY);
-      return token ?? state.token;
+      const cookies = useCookies()
+      const token = cookies.get(COOKIE_BEARER_TOKEN_KEY)
+      // Return raw token without 'Bearer ' prefix
+      return token ? token.replace('Bearer ', '') : state.token
     },
     isUserFetched: (state) => state.userFetched,
     isAnonymous: (state) => !state.token || !state.account,

@@ -4,13 +4,22 @@
       <div class="auth-content">
         <h2>Lépj be</h2>
         <div class="auth-form">
-          <input v-model="email" class="auth-form-input" type="text" placeholder="Email" />
-          <input v-model="password" class="auth-form-input" type="password" placeholder="Password" />
+          <input
+            v-model="username"
+            class="auth-form-input"
+            type="text"
+            placeholder="Felhasználónév"
+          />
+          <input
+            v-model="password"
+            class="auth-form-input"
+            type="password"
+            placeholder="Password"
+          />
           <button class="auth-form-button" @click="submit()">
             <i v-if="loading" class="icon loader"></i>
             <span v-else>Belépés</span>
           </button>
-          <router-link to="/auth/register" class="auth-form-link">Elfelejtett jelszó</router-link>
         </div>
       </div>
     </div>
@@ -19,52 +28,43 @@
 
 <script setup>
 import { ref } from 'vue';
-import { apiService } from '@/composables/useApiService'
+import { apiService } from '@/composables/useApiService';
 import { useUserStore } from '@/stores/user';
-import { isValidEmail } from '@/utils/validators';
 import { toast } from 'vue3-toastify';
 
 const loading = ref(false);
-const email = ref('');
+const username = ref('');
 const password = ref('');
 const isLoading = ref(false);
 
-
-const submit = () => {
+const submit = async () => {
   if (!validate()) {
     return;
   }
 
-  isLoading.value = true;
+  try {
+    isLoading.value = true;
+    const resp = await apiService.auth.login(username.value, password.value);
 
-  apiService.auth
-    .login(email.value, password.value)
-    .then((resp) => {
-      if (resp.code == 422) {
-        toast.error('Sikertelen bejelentkezés, hibás adatok!');
-        return;
-      } else if (resp.code == 401) {
-        toast.error('Sikertelen bejelentkezés, hibás adatok!');
-        return;
-      }
-
+    if (resp.code === 200) {
       const userStore = useUserStore();
-      userStore.fetchMe(true).then(() => {
-        // Redirect must be done this way to bypass VUE ROUTER's
-        // "history API" only change and to forces website to make
-        // new page request.
-        window.location = '/';
-      });
-    })
-    .finally(() => (isLoading.value = false));
+      userStore.login(resp.payload);
+      await userStore.fetchMe(true);
+      window.location = '/';
+    } else {
+      toast.error('Sikertelen bejelentkezés, hibás adatok!');
+    }
+  } catch (error) {
+    console.error('Login error:', error);
+    toast.error('Hiba történt a bejelentkezés során.');
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const validate = () => {
-  if (!email.value) {
-    toast.error('Email cím megadása kötelező.');
-    return false;
-  } else if (!isValidEmail(email.value)) {
-    toast.error('Hibás email cím formátum.');
+  if (!username.value) {
+    toast.error('Felhasználónév megadása kötelező.');
     return false;
   }
 

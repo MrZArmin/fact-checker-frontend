@@ -3,7 +3,7 @@ const namespace = 'user'
 export default ($request) => ({
 
   me() {
-    return $request.get(`${namespace}/me`)
+    return $request.get('me/');
   },
 
   getUsers() {

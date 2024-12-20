@@ -36,9 +36,10 @@
 </template>
 
 <script setup>
-const emit = defineEmits(['logout', 'add-new-conversation', 'open-conversation', 'delete-conversation']);
+import { apiService } from '@/composables/useApiService'
+const emit = defineEmits(['add-new-conversation', 'open-conversation', 'delete-conversation']);
 
-const props = defineProps({
+defineProps({
   items: {
     type: Array,
     required: true,
@@ -46,7 +47,9 @@ const props = defineProps({
 });
 
 const handleLogout = () => {
-  emit('logout');
+  apiService.auth.logout().then(() => {
+    window.location = '/login';
+  });
 };
 
 const handleAddNewConversation = () => {

@@ -16,11 +16,11 @@ export default ($request) => ({
     }
   },
 
-  login(email, password) {
+  login(username, password) {
     return $request
-      .post(`${namespace}/login`, { 
-        email, 
-        password 
+      .post('login/', {
+        username,
+        password,
       })
       .then((resp) => {
         const userStore = useUserStore();
@@ -31,7 +31,7 @@ export default ($request) => ({
   },
 
   logout() {
-    return $request.post(`${namespace}/logout`).then(() => {
+    return $request.post('logout/').then(() => {
       useUserStore().logout();
     });
   },
@@ -45,36 +45,5 @@ export default ($request) => ({
       email,
       password,
     });
-  },
-
-  createInvitation({
-    firstname,
-    lastname,
-    email,
-    level,
-    visibleAdAccountIds,
-    visibleSourceProfileIds,
-  }) {
-    const data = {
-      firstname,
-      lastname,
-      email,
-      level,
-      visible_ad_account_ids: visibleAdAccountIds,
-      visible_source_profile_ids: visibleSourceProfileIds,
-    };
-    return Api().post('/user-invitation', data);
-  },
-
-  deleteInvitation(id) {
-    return Api().delete('/user-invitation/' + id);
-  },
-
-  resendInvitation(id) {
-    return Api().post('/user-invitation/' + id + '/resend');
-  },
-
-  fetchInvitations() {
-    return Api().get('/user-invitations');
   },
 });
