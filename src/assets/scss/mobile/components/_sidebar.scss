@@ -2,6 +2,10 @@
   display: none;
   width: 100dvw;
 
+  &.open{
+    display: block;
+  }
+
   .sidebar-icons {
     justify-content:flex-start;
     flex-direction: row-reverse;

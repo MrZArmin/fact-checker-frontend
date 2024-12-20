@@ -1,23 +1,7 @@
 .conversation {
   width: 100dvw;
+
   .conversation-wrapper {
-    width: 100dvw;
-  }
-
-  ol {
-
-    li {
-      .icon{
-      }
-
-      .conversation-text{
-      }
-    }
-
-    .user-text {
-      }
-
-    .ai-text {
-    }
+    width: calc(100dvw - $mobile-input-margin);
   }
 }

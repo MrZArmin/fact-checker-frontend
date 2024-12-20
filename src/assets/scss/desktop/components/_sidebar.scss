@@ -4,7 +4,7 @@
   width: $sidebar-width;
   height: 100%;
   background-color: #333333;
-  overflow: auto;
+  overflow: none;
   padding: 8px;
 
   .sidebar-icons {
@@ -76,6 +76,8 @@
   }
 
   .sidebar-history {
+    overflow: auto;
+    height: calc(100% - 130px);
     flex-grow: 1;
 
     ul {

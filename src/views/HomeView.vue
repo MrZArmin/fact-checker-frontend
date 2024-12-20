@@ -1,6 +1,7 @@
 <template>
   <div
     class="home"
+    :class="{ 'sidebar-open' : isSidebarOpen }"
     ref="home"
   >
   <i
@@ -8,6 +9,7 @@
     class="icon hamburger large white">
   </i>
     <Sidebar
+      :class="{ open : isSidebarOpen }"
       :items="history"
       @logout="handleLogout"
       @add-new-conversation="handleAddNewConversation"
@@ -30,7 +32,7 @@ import Conversation from '@/components/Conversation.vue';
 import Input from '@/components/Input.vue';
 
 const history = [
-  { id: 1, text: 'asdasdsasadsadasdsadsaddadsadsaddadsadsaddadsadsadda' },
+  { id: 1, text: 'Armin Arlelt' },
   { id: 2, text: 'asdasdsasadsadsadsaddadsadsaddadsadsaddadasdsadsadda' },
   { id: 3, text: 'asdadsadsaddadsadsaddasdsasadsadasdsadsadda' },
   { id: 4, text: 'asdasdsasadsadasdsadsadda' },
@@ -49,7 +51,7 @@ const history = [
   { id: 17, text: 'asdasdsasadsadasdsadsadda' },
   { id: 18, text: 'asdasdsasadsadasdsadsadda' },
   { id: 19, text: 'asdasdsasadsadasdsadsadda' },
-  { id: 20, text: 'asdasdsasadsadasdsadsadda' },
+  { id: 20, text: 'egér' },
 ];
 
 const sidebar = ref(null)
@@ -57,6 +59,7 @@ const home = ref(null)
 let isLoading = ref(false);
 let conv = ref({ type: '', text: '' });
 let isEmpty = ref(true);
+const isSidebarOpen = ref(false);
 
 const handleLogout = () => {
   console.log('logging out');
@@ -75,15 +78,7 @@ const handleDeleteConversation = (id) => {
 };
 
 const handleToggleSidebar = () => {
-  const sidebarElement = sidebar.value.$el;
-  const homeElement = home.value;
-  if (sidebarElement.style.display === "block") {
-    sidebarElement.style.display = "none";
-    homeElement.style.display = "flex";
-  } else {
-    sidebarElement.style.display = "block";
-    homeElement.style.display = "block";
-  }
+  isSidebarOpen.value = !isSidebarOpen.value;
 };
 
 const handleSend = async (prompt) => {

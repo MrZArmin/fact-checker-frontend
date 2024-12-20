@@ -5,7 +5,8 @@ $screen-md: 992px;
 $screen-lg: 1200px;
 
 $sidebar-width: 250px;
-$conversation-width: 900px;
+$input-margin: 300px;
+$conversation-width: calc(100dvw - $sidebar-width - $input-margin);
 $mobile-input-margin: 50px;
 
 /* Colors */

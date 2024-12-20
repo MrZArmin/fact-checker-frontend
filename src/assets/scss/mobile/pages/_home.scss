@@ -1,4 +1,14 @@
 .home {
+  display: flex;
+
+  &.sidebar-open{
+    display: block;
+
+    .input{
+      display: none;
+    }
+  }
+
   .home-input-container{
     width: 100dvw;
   }
