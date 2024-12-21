@@ -6,7 +6,6 @@
 
 <script>
 import { useUserStore } from '@/stores/user';
-import { apiService } from '@/composables/useApiService';
 
 export default {
   name: 'App',
@@ -22,8 +21,7 @@ export default {
       const meResponse = await userStore.fetchMe(true);
 
       if (meResponse.payload) {
-        const user = meResponse.payload;
-        apiService.setToken(user.token);
+        userStore.init();
       }
       userStore.init();
     } catch (e) {

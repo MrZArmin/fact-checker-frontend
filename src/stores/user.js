@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { useCookies } from '@vueuse/integrations/useCookies';
 import { apiService } from '@/composables/useApiService';
 
-export const COOKIE_BEARER_TOKEN_KEY = 'zrinszki_token';
+export const COOKIE_BEARER_TOKEN_KEY = 'factchecker_token';
 
 export const useUserStore = defineStore('user', {
   state: () => ({
@@ -147,6 +147,13 @@ export const useUserStore = defineStore('user', {
       const cookies = useCookies();
       cookies.remove(COOKIE_BEARER_TOKEN_KEY, { path: '/' });
       this.clearStorageAndState();
+    },
+
+    setToken(value) {
+      this.token = value
+
+      const cookies = useCookies()
+      cookies.set(COOKIE_BEARER_TOKEN_KEY, this.token, { path: '/', secure: true })
     },
   }
 });
