@@ -98,7 +98,7 @@ const handleSend = async (prompt) => {
 
 const apiResponse = (prompt) => {
   console.log('prompt: ', prompt);
-  const answer = 'sasageyo';
+  const answer = 'ai answer';
   return answer;
 };
 </script>
