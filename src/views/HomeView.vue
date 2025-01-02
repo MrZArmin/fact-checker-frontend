@@ -1,104 +1,163 @@
 <template>
-  <div
-    class="home"
-    :class="{ 'sidebar-open' : isSidebarOpen }"
-    ref="home"
-  >
-  <i
-    @click="handleToggleSidebar"
-    class="icon hamburger large white">
-  </i>
+  <div class="home" :class="{ 'sidebar-open': isSidebarOpen }" ref="homeRef">
+    <i @click="toggleSidebar" class="icon hamburger large white"></i>
+
     <Sidebar
-      :class="{ open : isSidebarOpen }"
-      :items="history"
-      @logout="handleLogout"
+      :class="{ open: isSidebarOpen }"
+      :items="sessions"
       @add-new-conversation="handleAddNewConversation"
       @open-conversation="handleOpenConversation"
       @delete-conversation="handleDeleteConversation"
-      ref="sidebar"
     />
-    <Conversation v-if="!isEmpty" :loading="isLoading" :conversation="conv" @send="handleSend"/>
-    <div v-else class="home-input-container">
-      <div class="home-title">Mit szeretnél megtudni?</div>
-      <Input @send="handleSend" />
-    </div>
+
+    <template v-if="!isEmpty">
+      <Conversation
+        :loading="isLoading"
+        :messages="currentMessages"
+        @send="handleSend"
+      />
+    </template>
+    <template v-else>
+      <div class="home-input-container">
+        <div class="home-title">Mit szeretnél megtudni?</div>
+        <Input @send="handleSend" />
+      </div>
+    </template>
   </div>
 </template>
+
 <script setup>
-import { ref } from 'vue';
+import { ref, computed, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { apiService } from '@/composables/useApiService';
+import { useChatStore } from '@/stores/chat';
+import Session from '@/entities/Session.js';
+import Sidebar from '@/components/SidebarComponent.vue';
+import Conversation from '@/components/ConversationComponent.vue';
+import Input from '@/components/InputComponent.vue';
+import Message from '../entities/Message';
+import { toast } from 'vue3-toastify';
 
-import Sidebar from '@/components/Sidebar.vue';
-import Conversation from '@/components/Conversation.vue';
-import Input from '@/components/Input.vue';
+// Composables
+const route = useRoute();
+const router = useRouter();
+const chatStore = useChatStore();
 
-const history = [
-  { id: 1, text: 'Armin Arlelt' },
-  { id: 2, text: 'asdasdsasadsadsadsaddadsadsaddadsadsaddadasdsadsadda' },
-  { id: 3, text: 'asdadsadsaddadsadsaddasdsasadsadasdsadsadda' },
-  { id: 4, text: 'asdasdsasadsadasdsadsadda' },
-  { id: 5, text: 'asdasdsasadsadasdsadsadda' },
-  { id: 6, text: 'asdasdsasadsadasdsadsadda' },
-  { id: 7, text: 'asdasds' },
-  { id: 8, text: 'asdasdsasadsadasdsadsadda' },
-  { id: 9, text: 'asdasdsasadsadasdsadsadda' },
-  { id: 10, text: 'asdasdsasadsadasdsadsadda' },
-  { id: 11, text: 'asdasdsasadsadasdsadsadda' },
-  { id: 12, text: 'asdasdsasadsadasdsadsadda' },
-  { id: 13, text: 'asdasdsasadsadasdsadsadda' },
-  { id: 14, text: 'asdasdsasadsadasdsadsadda' },
-  { id: 15, text: 'asdasdsasadsadasdsadsadda' },
-  { id: 16, text: 'asdasdsasadsadasdsadsadda' },
-  { id: 17, text: 'asdasdsasadsadasdsadsadda' },
-  { id: 18, text: 'asdasdsasadsadasdsadsadda' },
-  { id: 19, text: 'asdasdsasadsadasdsadsadda' },
-  { id: 20, text: 'egér' },
-];
-
-const sidebar = ref(null)
-const home = ref(null)
-let isLoading = ref(false);
-let conv = ref({ type: '', text: '' });
-let isEmpty = ref(true);
+// Refs
+const homeRef = ref(null);
+const isLoading = ref(false);
+const isEmpty = ref(true);
 const isSidebarOpen = ref(false);
+const currentSession = ref(chatStore.getCurrentSession);
 
-const handleLogout = () => {
-  console.log('logging out');
+// Computed
+const sessions = computed(() => chatStore.getSessions);
+const currentMessages = computed(() =>
+  currentSession.value ? currentSession.value.messages : []
+);
+
+// Watchers
+watch(
+  () => route.params.id,
+  async (newId) => {
+    if (newId) {
+      currentSession.value = chatStore.findSession(newId);
+      await loadConversation();
+    }
+  }
+);
+
+watch(
+  () => chatStore.getCurrentSession,
+  async (newSession) => {
+    if (route.params.id && newSession) {
+      currentSession.value = newSession;
+      await loadConversation();
+    }
+  }
+);
+
+// Methods
+const loadConversation = async () => {
+  isLoading.value = true;
+  if (currentSession.value.messages.length > 0) {
+    isLoading.value = false;
+    return
+  } 
+
+  try {
+    const { payload } = await apiService.chat.getMessages(
+      currentSession.value.id
+    );
+    isEmpty.value = false;
+    currentSession.value.setMessages(payload.messages);
+  } catch (error) {
+    console.error('Error loading conversation:', error);
+    router.push('/new');
+  } finally {
+    isLoading.value = false;
+  }
 };
 
-const handleAddNewConversation = () => {
-  console.log('adding new conversation');
+const handleAddNewConversation = async () => {
+  //if (route.name !== 'new-conversation') return;
+  chatStore.setDefault();
+  currentSession.value = null;
+  isEmpty.value = true;
 };
 
 const handleOpenConversation = (id) => {
-  console.log('opening conversation id: ', id);
+  router.push(`/${id}`);
 };
 
-const handleDeleteConversation = (id) => {
-  console.log('deleting conversation id: ', id);
+const handleDeleteConversation = async (id) => {
+  try {
+    await apiService.chat.deleteSession(id);
+    chatStore.removeSession(id);
+    if (currentSession.value.id === id) {
+      router.push('/new');
+      chatStore.setDefault();
+      currentSession.value = null;
+      isEmpty.value = true;
+    }
+  } catch (error) {
+    toast.error('Hiba történt törlés közben');
+  }
 };
 
-const handleToggleSidebar = () => {
+const toggleSidebar = () => {
   isSidebarOpen.value = !isSidebarOpen.value;
 };
 
 const handleSend = async (prompt) => {
   isEmpty.value = false;
-
-  // Simulate loading state for AI response
   isLoading.value = true;
 
-  // Wait for response
-  await new Promise((resolve) => setTimeout(resolve, 500)); // Simulate delay
-  const answer = apiResponse(prompt);
+  try {
+    if (!currentSession.value) {
+      const session  = new Session(await apiService.chat.startSession(prompt));
+      chatStore.addSession(session);
+      chatStore.setCurrenSessionFromId(session.id);
+      currentSession.value = chatStore.getCurrentSession;
+      router.push(`/${session.id}`);
+    }
 
-  // Update with the AI's response
-  conv.value = { type: 'ai', text: answer };
-  isLoading.value = false;
-};
+    currentSession.value.addMessage(
+      new Message({ sender: 'user', message: prompt })
+    );
 
-const apiResponse = (prompt) => {
-  console.log('prompt: ', prompt);
-  const answer = 'ai answer';
-  return answer;
+    const response = await apiService.chat.sendMessage(
+      currentSession.value.id,
+      prompt
+    );
+
+    if (!response) {
+      toast.error('Hiba a válasz generálása közben');
+    }
+  } catch (error) {
+    console.error('Error sending message:', error);
+  } finally {
+    isLoading.value = false;
+  }
 };
 </script>

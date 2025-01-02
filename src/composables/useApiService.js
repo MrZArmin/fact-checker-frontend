@@ -4,6 +4,7 @@ import { useUserStore } from '@/stores/user';
 
 import apiAuth from '@/api/auth';
 import apiUser from '@/api/user';
+import apiChat from '@/api/chat';
 
 const request = (
   requestPath,
@@ -24,7 +25,7 @@ const request = (
   }
 
   // Add query parameters to URL if they exist
-  const url = new URL(`${config.apiBaseUrl}/${requestPath}`);
+  const url = new URL(`${config.apiBaseUrl}${requestPath}`);
   if (query) {
     Object.keys(query).forEach((key) =>
       url.searchParams.append(key, query[key])
@@ -83,4 +84,5 @@ export const apiService = {
   displayValidationErrors,
   auth: apiAuth(apiRequests),
   user: apiUser(apiRequests),
+  chat: apiChat(apiRequests),
 };
