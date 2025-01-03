@@ -1,0 +1,37 @@
+# Prepare to launch
+Write-Output "Prepare to launch"
+Write-Output "========================="
+Write-Output ""
+
+Write-Output "- Cleaning up a bit"
+Remove-Item -Recurse -Force ./dist
+Write-Output ""
+
+$confirmation = Read-Host "Are you sure?(y/n): "
+if ($confirmation -match "^[Yy]$") {
+    Remove-Item -Recurse -Force ./node_modules
+    Write-Output "- Rebuilding packages"
+    npm install
+    Write-Output ""
+}
+
+Write-Output ""
+Write-Output ""
+
+Write-Output "Deploy to zrinszki server: 45.10.94.150 (zrinszki.hu)"
+Write-Output ""
+npm run build
+
+# Using robocopy to copy files
+$source = "./dist/"
+$destination = "\\zrinszki.hu\www\fact-checker-frontend\dist"
+$excludeFile = ".rsync_exclude"
+
+# Read exclude patterns from .rsync_exclude file
+$excludePatterns = Get-Content $excludeFile | ForEach-Object { "/XF $_" } -join " "
+
+# Execute robocopy
+Start-Process robocopy -ArgumentList "$source $destination /MIR $excludePatterns" -NoNewWindow -Wait
+
+Write-Output ""
+Write-Output ""
