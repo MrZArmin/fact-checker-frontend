@@ -21,7 +21,7 @@
           <button
             class="auth-form-button"
             @click="submit()"
-            :class="{ disabled: isLoading}"
+            :disabled="isLoading"
           >
             <i v-if="isLoading" class="icon loader"></i>
             <span v-else>Belépés</span>
