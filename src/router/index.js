@@ -50,7 +50,7 @@ router.beforeEach(async (to, from, next) => {
 
   const userStore = useUserStore();
 
-  await userStore.init();
+  await userStore.init(true);
 
   const loggedIn = userStore.isLoggedIn;
 
@@ -58,10 +58,6 @@ router.beforeEach(async (to, from, next) => {
 
   if (!loggedIn && !toPublicView) {
     return next('/login');
-  }
-
-  if (loggedIn && toPublicView) {
-    return next('/');
   }
 
   next();

@@ -26,7 +26,7 @@
           @click="handleOpenConversation(item.id)"
           :class="{ active: currentConversationId === item.id }"
         >
-          <div class="sidebar-history-text" :title="item.title">
+        <div class="sidebar-history-text" :title="item.title">
             {{ item.title }}
           </div>
           <i
@@ -43,6 +43,7 @@
 import { computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { apiService } from '@/composables/useApiService';
+import { useUserStore } from '@/stores/user';
 
 defineProps({
   items: {
@@ -58,6 +59,7 @@ const emit = defineEmits([
 ]);
 const router = useRouter();
 const route = useRoute();
+const userStore = useUserStore();
 
 const currentConversationId = computed(() => route.params.id ?? null);
 
@@ -66,8 +68,8 @@ const canOpenNewConversation = computed(() => (route.params.id ? true : false));
 const handleLogout = async () => {
   try {
     await apiService.auth.logout();
-    emit('logout');
-    router.push('/login');
+    userStore.logout();
+    router.replace('/login');
   } catch (error) {
     console.error('Logout failed:', error);
   }

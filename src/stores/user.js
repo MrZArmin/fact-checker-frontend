@@ -114,8 +114,6 @@ export const useUserStore = defineStore('user', {
       }
     },
 
-    // ... rest of your actions
-
     login(data) {
       const { user, access_token, token_type, expires_in } = data;
       const cookies = useCookies();
