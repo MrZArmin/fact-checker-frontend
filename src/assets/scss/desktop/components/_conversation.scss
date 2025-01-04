@@ -21,7 +21,6 @@
 
     li {
       display: flex;
-      align-items: center;
       max-width: 70%;
       padding: 10px 20px;
       margin: 5px 0px;
@@ -29,6 +28,8 @@
       word-break: break-word; /* Alternative for modern browsers */
 
       .icon{
+        min-width: 18px;
+        min-height: 18px;
         margin-right: 10px;
       }
 

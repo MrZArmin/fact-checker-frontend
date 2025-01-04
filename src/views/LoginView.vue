@@ -9,15 +9,21 @@
             class="auth-form-input"
             type="text"
             placeholder="Felhasználónév"
+            @keydown.enter="submit()"
           />
           <input
             v-model="password"
             class="auth-form-input"
             type="password"
             placeholder="Password"
+            @keydown.enter="submit()"
           />
-          <button class="auth-form-button" @click="submit()">
-            <i v-if="loading" class="icon loader"></i>
+          <button
+            class="auth-form-button"
+            @click="submit()"
+            :class="{ disabled: isLoading}"
+          >
+            <i v-if="isLoading" class="icon loader"></i>
             <span v-else>Belépés</span>
           </button>
         </div>
@@ -32,7 +38,6 @@ import { apiService } from '@/composables/useApiService';
 import { useUserStore } from '@/stores/user';
 import { toast } from 'vue3-toastify';
 
-const loading = ref(false);
 const username = ref('');
 const password = ref('');
 const isLoading = ref(false);
