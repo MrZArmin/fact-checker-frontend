@@ -53,6 +53,9 @@ div.icon {
   &.hamburger {
     mask-image: url('@/assets/img/icons/hamburger.svg');
   }
+  &.close {
+    mask-image: url('@/assets/img/icons/close.svg');
+  }
 }
 
 a.icon-wrapper .badge {

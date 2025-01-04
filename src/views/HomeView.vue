@@ -1,6 +1,7 @@
 <template>
   <div class="home" :class="{ 'sidebar-open': isSidebarOpen }" ref="homeRef">
-    <i @click="toggleSidebar" class="icon hamburger large white"></i>
+    <i v-if="!isSidebarOpen" @click="toggleSidebar" class="icon hamburger large white"></i>
+    <i v-else @click="toggleSidebar" class="icon close large white"></i>
 
     <Sidebar
       :class="{ open: isSidebarOpen }"
