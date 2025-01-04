@@ -61,7 +61,8 @@ watch(
   () => route.params.id,
   async (newId) => {
     if (newId) {
-      currentSession.value = chatStore.findSession(newId);
+      chatStore.setCurrenSessionFromId(newId);
+      currentSession.value = chatStore.getCurrentSession;
       await loadConversation();
     }
   }
@@ -82,6 +83,7 @@ const loadConversation = async () => {
   isLoading.value = true;
   if (currentSession.value.messages.length > 0) {
     isLoading.value = false;
+    isEmpty.value = false;
     return
   }
 
@@ -100,7 +102,6 @@ const loadConversation = async () => {
 };
 
 const handleAddNewConversation = async () => {
-  //if (route.name !== 'new-conversation') return;
   chatStore.setDefault();
   currentSession.value = null;
   isEmpty.value = true;
