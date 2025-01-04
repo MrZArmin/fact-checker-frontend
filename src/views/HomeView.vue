@@ -83,7 +83,7 @@ const loadConversation = async () => {
   if (currentSession.value.messages.length > 0) {
     isLoading.value = false;
     return
-  } 
+  }
 
   try {
     const { payload } = await apiService.chat.getMessages(
@@ -104,10 +104,12 @@ const handleAddNewConversation = async () => {
   chatStore.setDefault();
   currentSession.value = null;
   isEmpty.value = true;
+  toggleSidebar();
 };
 
 const handleOpenConversation = (id) => {
   router.push(`/${id}`);
+  toggleSidebar();
 };
 
 const handleDeleteConversation = async (id) => {
