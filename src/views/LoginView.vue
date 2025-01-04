@@ -23,7 +23,7 @@
             @click="submit()"
             :disabled="isLoading"
           >
-            <i v-if="isLoading" class="icon loader"></i>
+            <i v-if="isLoading" class="icon loader white"></i>
             <span v-else>Belépés</span>
           </button>
         </div>
