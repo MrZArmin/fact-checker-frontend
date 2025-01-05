@@ -19,22 +19,65 @@
     </div>
 
     <div class="sidebar-history">
-      <ul>
-        <li
-          v-for="item in items"
-          :key="item.id"
-          @click="handleOpenConversation(item.id)"
-          :class="{ active: currentConversationId === item.id }"
-        >
-        <div class="sidebar-history-text" :title="item.title">
-            {{ item.title }}
-          </div>
-          <i
-            @click.stop="handleDeleteConversation(item.id)"
-            class="icon delete white"
-          />
-        </li>
-      </ul>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Mai beszélgetések</div>
+        <ul>
+          <li
+            v-for="item in todaysChats"
+            :key="item.id"
+            @click="handleOpenConversation(item.id)"
+            :class="{ active: currentConversationId === item.id }"
+          >
+            <div class="sidebar-history-text" :title="item.title">
+              {{ item.title }}
+            </div>
+            <i
+              @click.stop="handleDeleteConversation(item.id)"
+              class="icon delete white"
+            />
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Elmúlt 7 nap</div>
+        <ul>
+          <li
+            v-for="item in last7DaysChats"
+            :key="item.id"
+            @click="handleOpenConversation(item.id)"
+            :class="{ active: currentConversationId === item.id }"
+          >
+            <div class="sidebar-history-text" :title="item.title">
+              {{ item.title }}
+            </div>
+            <i
+              @click.stop="handleDeleteConversation(item.id)"
+              class="icon delete white"
+            />
+          </li>
+        </ul>
+      </div>
+
+      <div v-if="lastMonthOrOlderChats.length" class="sidebar-section">
+        <div class="sidebar-section-title">Előző 30 nap vagy korábbi</div>
+        <ul>
+          <li
+            v-for="item in lastMonthOrOlderChats"
+            :key="item.id"
+            @click="handleOpenConversation(item.id)"
+            :class="{ active: currentConversationId === item.id }"
+          >
+            <div class="sidebar-history-text" :title="item.title">
+              {{ item.title }}
+            </div>
+            <i
+              @click.stop="handleDeleteConversation(item.id)"
+              class="icon delete white"
+            />
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -44,8 +87,9 @@ import { computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { apiService } from '@/composables/useApiService';
 import { useUserStore } from '@/stores/user';
+import { isToday, isWithinLast7Days, isWithinLastMonth } from '@/utils/date';
 
-defineProps({
+const props = defineProps({
   items: {
     type: Array,
     required: true,
@@ -62,8 +106,25 @@ const route = useRoute();
 const userStore = useUserStore();
 
 const currentConversationId = computed(() => route.params.id ?? null);
-
 const canOpenNewConversation = computed(() => (route.params.id ? true : false));
+
+const todaysChats = computed(() =>
+  props.items
+    .filter((item) => isToday(new Date(item.updated_at)))
+    .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
+);
+
+const last7DaysChats = computed(() =>
+  props.items
+    .filter((item) => isWithinLast7Days(new Date(item.updated_at)))
+    .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
+);
+
+const lastMonthOrOlderChats = computed(() =>
+  props.items
+    .filter((item) => isWithinLastMonth(new Date(item.updated_at)))
+    .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
+);
 
 const handleLogout = async () => {
   try {

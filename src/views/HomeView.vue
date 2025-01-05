@@ -155,7 +155,9 @@ const handleSend = async (prompt) => {
       prompt
     );
 
-    if (!response) {
+    currentSession.value.updated_at = response.session.updated_at;
+
+    if (!response.response) {
       toast.error('Hiba a válasz generálása közben');
     }
   } catch (error) {

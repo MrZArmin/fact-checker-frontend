@@ -90,6 +90,14 @@
     height: calc(100% - 130px);
     flex-grow: 1;
 
+    .sidebar-section-title {
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      margin: 8px 0;
+      text-decoration: underline;
+    }
+
     ul {
       list-style: none;
       padding: 0px 8px;

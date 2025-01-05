@@ -25,7 +25,7 @@ export default ($request) => ({
       const currentSession = chatStore.getCurrentSession;
       currentSession.addMessage(new Message({ sender: 'ai', message: resp.payload.response }))
 
-      return resp.payload.response;
+      return resp.payload;
     });
   },
 
