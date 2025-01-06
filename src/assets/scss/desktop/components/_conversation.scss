@@ -20,22 +20,31 @@
     padding-bottom: 10px;
 
     li {
-      display: flex;
-      max-width: 70%;
-      padding: 10px 20px;
-      margin: 5px 0px;
       border-radius: 20px;
-      word-break: break-word; /* Alternative for modern browsers */
+      max-width: 70%;
+      .message-container {
+        display: flex;
+        padding: 10px 20px;
+        margin: 5px 0px;
+        word-break: break-word; /* Alternative for modern browsers */
 
-      .icon{
-        min-width: 18px;
-        min-height: 18px;
-        margin-right: 10px;
+        .icon {
+          min-width: 18px;
+          min-height: 18px;
+          margin-right: 10px;
+        }
+  
+        .conversation-text {
+          color: white;
+          font-size: 16px;
+        }
       }
 
-      .conversation-text{
-        color: white;
-        font-size: 16px;
+      .article-modal-opener {
+        padding: 0 20px;
+        margin-top: -15px;
+        color: #64B5F6;
+        cursor: pointer;
       }
     }
 
@@ -45,7 +54,7 @@
       margin-left: auto;
       text-align: right;
       white-space: pre-wrap;
-      }
+    }
 
     .ai-text {
       margin-right: auto;

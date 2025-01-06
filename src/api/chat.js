@@ -23,7 +23,7 @@ export default ($request) => ({
     .then((resp) => {
       const chatStore = useChatStore();
       const currentSession = chatStore.getCurrentSession;
-      currentSession.addMessage(new Message({ sender: 'ai', message: resp.payload.response }))
+      currentSession.addMessage(new Message(resp.payload.ai_message));
 
       return resp.payload;
     });

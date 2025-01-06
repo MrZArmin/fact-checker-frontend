@@ -50,6 +50,7 @@ const isLoading = ref(false);
 const isEmpty = ref(true);
 const isSidebarOpen = ref(false);
 const currentSession = ref(chatStore.getCurrentSession);
+const isLoadingConversation = ref(false);
 
 // Computed
 const sessions = computed(() => chatStore.getSessions);
@@ -61,10 +62,12 @@ const currentMessages = computed(() =>
 watch(
   () => route.params.id,
   async (newId) => {
-    if (newId) {
+    if (newId && !isLoadingConversation.value) {
+      isLoadingConversation.value = true;
       chatStore.setCurrenSessionFromId(newId);
       currentSession.value = chatStore.getCurrentSession;
       await loadConversation();
+      isLoadingConversation.value = false;
     }
   }
 );
@@ -72,9 +75,11 @@ watch(
 watch(
   () => chatStore.getCurrentSession,
   async (newSession) => {
-    if (route.params.id && newSession) {
+    if (route.params.id && newSession && !isLoadingConversation.value) {
+      isLoadingConversation.value = true;
       currentSession.value = newSession;
       await loadConversation();
+      isLoadingConversation.value = false;
     }
   }
 );
@@ -136,6 +141,7 @@ const toggleSidebar = () => {
 const handleSend = async (prompt) => {
   isEmpty.value = false;
   isLoading.value = true;
+  loadToBottom();
 
   try {
     if (!currentSession.value) {
@@ -157,13 +163,20 @@ const handleSend = async (prompt) => {
 
     currentSession.value.updated_at = response.session.updated_at;
 
-    if (!response.response) {
+    if (!response) {
       toast.error('Hiba a válasz generálása közben');
     }
+
   } catch (error) {
     console.error('Error sending message:', error);
   } finally {
     isLoading.value = false;
   }
+};
+
+const loadToBottom = () => {
+  setTimeout(() => {
+    homeRef.value.scrollTop = homeRef.value.scrollHeight;
+  }, 100);
 };
 </script>

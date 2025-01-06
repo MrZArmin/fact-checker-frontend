@@ -1,6 +1,7 @@
 <template>
   <div class="main-content">
     <RouterView />
+    <ModalsContainer />
   </div>
 </template>
 
@@ -8,6 +9,7 @@
 import { useUserStore } from '@/stores/user';
 import { useChatStore } from '@/stores/chat';
 import { apiService } from '@/composables/useApiService';
+import { ModalsContainer } from 'vue-final-modal'
 
 export default {
   name: 'App',

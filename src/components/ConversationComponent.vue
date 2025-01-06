@@ -10,9 +10,18 @@
             'message-item',
           ]"
         >
-          <i v-if="message.sender === 'ai'" class="icon logo white"></i>
-          <div class="conversation-text">
-            {{ message.message }}
+          <div class="message-container">
+            <i v-if="message.sender === 'ai'" class="icon logo white"></i>
+            <div class="conversation-text">
+              {{ message.message }}
+            </div>
+          </div>
+          <div
+            v-if="message.articles && message.articles.length"
+            class="article-modal-opener"
+            @click="openArticleModal(message.articles)"
+          >
+            Kontextusnak használt cikkek
           </div>
         </li>
         <li v-if="loading" class="ai-text loading-message">
@@ -26,11 +35,17 @@
       :disabled="loading"
       :placeholder="inputPlaceholder"
     />
+    <ArticleModal
+      v-model:isModalOpen="isArticleModalOpen"
+      :articles="selectedArticles"
+      @close="isArticleModalOpen = false"
+    />
   </div>
 </template>
 
 <script setup>
 import { ref, watch, nextTick, onMounted } from 'vue';
+import ArticleModal from '@/components/ArticleModal.vue';
 import Input from '@/components/InputComponent.vue';
 
 const props = defineProps({
@@ -51,6 +66,8 @@ const props = defineProps({
 const emit = defineEmits(['send']);
 const conversation = ref(null);
 const inputPlaceholder = ref('Type your message...');
+const isArticleModalOpen = ref(false);
+const selectedArticles = ref([]);
 
 // Watch for new messages and scroll to bottom
 watch(
@@ -94,5 +111,10 @@ const scrollToBottom = () => {
       element.scrollTop = element.scrollHeight;
     }
   });
+};
+
+const openArticleModal = (articles) => {
+  selectedArticles.value = articles;
+  isArticleModalOpen.value = true;
 };
 </script>

@@ -19,7 +19,7 @@
     </div>
 
     <div class="sidebar-history">
-      <div class="sidebar-section">
+      <div v-if="todaysChats.length" class="sidebar-section">
         <div class="sidebar-section-title">Mai beszélgetések</div>
         <ul>
           <li
@@ -39,7 +39,7 @@
         </ul>
       </div>
 
-      <div class="sidebar-section">
+      <div v-if="last7DaysChats.length" class="sidebar-section">
         <div class="sidebar-section-title">Elmúlt 7 nap</div>
         <ul>
           <li

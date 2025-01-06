@@ -6,7 +6,12 @@ import App from './App.vue';
 import router from './router';
 import Vue3Toasity from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
-import vSelect from 'vue-select'
+import vSelect from 'vue-select';
+
+// Import Vue Final Modal
+import { createVfm } from 'vue-final-modal';
+const vfm = createVfm();
+import 'vue-final-modal/style.css';
 
 // Create the Pinia instance first
 const pinia = createPinia();
@@ -17,15 +22,15 @@ pinia.use(({ store }) => {
 });
 
 // Vuetify
-import 'vuetify/styles'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
+import 'vuetify/styles';
+import { createVuetify } from 'vuetify';
+import * as components from 'vuetify/components';
+import * as directives from 'vuetify/directives';
 
 const vuetify = createVuetify({
   components,
   directives,
-})
+});
 
 // Create the app
 const app = createApp(App);
@@ -42,6 +47,7 @@ app.use(Vue3Toasity, {
   theme: 'dark',
 });
 app.use(vuetify);
+app.use(vfm);
 
 // Mount the app
 app.mount('#app');
