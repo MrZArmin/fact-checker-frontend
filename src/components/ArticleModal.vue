@@ -1,4 +1,3 @@
-<!-- ArticleModal.vue -->
 <template>
   <VueFinalModal
     :model-value="isModalOpen"

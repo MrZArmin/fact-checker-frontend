@@ -4,7 +4,6 @@ import Article from '@/entities/Article';
 export default class Message extends BaseEntity {
   sender = null;
   message = null;
-  valuable_info = null;
   articles = [];
 
   _entityArrayFields = {
