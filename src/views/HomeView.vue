@@ -15,6 +15,7 @@
       <Conversation
         :loading="isLoading"
         :messages="currentMessages"
+        :error="sendReturnedError" 
         @send="handleSend"
       />
     </template>
@@ -51,6 +52,7 @@ const isEmpty = ref(true);
 const isSidebarOpen = ref(false);
 const currentSession = ref(chatStore.getCurrentSession);
 const isLoadingConversation = ref(false);
+const sendReturnedError = ref(false);
 
 // Computed
 const sessions = computed(() => chatStore.getSessions);
@@ -86,9 +88,7 @@ watch(
 
 // Methods
 const loadConversation = async () => {
-  isLoading.value = true;
   if (currentSession.value.messages.length > 0) {
-    isLoading.value = false;
     isEmpty.value = false;
     return
   }
@@ -102,8 +102,6 @@ const loadConversation = async () => {
   } catch (error) {
     console.error('Error loading conversation:', error);
     router.push('/new');
-  } finally {
-    isLoading.value = false;
   }
 };
 
@@ -130,6 +128,7 @@ const handleDeleteConversation = async (id) => {
       isEmpty.value = true;
     }
   } catch (error) {
+    console.error('Error deleting conversation:', error);
     toast.error('Hiba történt törlés közben');
   }
 };
@@ -160,6 +159,11 @@ const handleSend = async (prompt) => {
       currentSession.value.id,
       prompt
     );
+
+    if (response.error) {
+      sendReturnedError.value = true;
+      return;
+    }
 
     currentSession.value.updated_at = response.session.updated_at;
 

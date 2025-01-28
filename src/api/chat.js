@@ -23,6 +23,12 @@ export default ($request) => ({
     .then((resp) => {
       const chatStore = useChatStore();
       const currentSession = chatStore.getCurrentSession;
+
+      if (resp.payload.error) {
+        currentSession.addMessage(new Message({sender: 'ai', message:'Hiba történt a válasz generálása közben.', isErrorMessage: true}));
+        return resp.payload;
+      }
+
       currentSession.addMessage(new Message(resp.payload.ai_message));
 
       return resp.payload;

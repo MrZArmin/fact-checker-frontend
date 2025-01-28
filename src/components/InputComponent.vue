@@ -3,12 +3,9 @@
     <div class="input-container">
       <textarea v-model="text" class="input-text" :placeholder=placeholderText
         @keydown="handleKeydown"
-        @input="autoResize"
         ref="textarea">
       </textarea>
-      <div class="icon-container">
-        <i @click="handleSend" class="icon send white large" :class="{ disabled: !text.trim() }"/>
-      </div>
+      <i @click="handleSend" class="icon send white large" :class="{ disabled: !text.trim() }"/>
     </div>
   </div>
 </template>
@@ -33,17 +30,6 @@ const handleKeydown = (e) => {
   if (e.key === 'Enter' && !e.shiftKey) {
     e.preventDefault();
     handleSend();
-  }
-};
-
-const autoResize = () => {
-  const el = textarea.value;
-  if(el.value){
-    el.style.height = 'auto';
-    el.style.height = el.scrollHeight + 'px';
-    el.style.overflow = "auto";
-  } else{
-    resizeTextAreaToDefault();
   }
 };
 

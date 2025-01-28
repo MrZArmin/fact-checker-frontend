@@ -7,6 +7,11 @@
   overflow-y: auto;
   margin-bottom: 100px;
 
+  .icon.loader {
+    height: 60px;
+    width: 60px;
+  }
+
   .conversation-wrapper {
     max-height: 80dvh;
     width: $conversation-width;
@@ -59,6 +64,18 @@
     .ai-text {
       margin-right: auto;
       text-align: left;
+
+      &.error-message {
+        border: 1px solid red;
+
+        .icon {
+          background-color: red;
+        }
+
+        .conversation-text {
+          color: rgba(255, 0, 0, 0.8);
+        }
+      }
     }
   }
 }

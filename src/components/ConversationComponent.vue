@@ -1,6 +1,6 @@
 <template>
   <div class="conversation" ref="conversation">
-    <div class="conversation-wrapper">
+    <div v-if="messages.length" class="conversation-wrapper">
       <ol>
         <li
           v-for="(message, index) in messages"
@@ -8,6 +8,7 @@
           :class="[
             message.sender === 'ai' ? 'ai-text' : 'user-text',
             'message-item',
+            message.isErrorMessage ? 'error-message' : '',
           ]"
         >
           <div class="message-container">
@@ -30,6 +31,7 @@
         </li>
       </ol>
     </div>
+    <i v-else class="icon loader white"></i>
     <Input
       @send="handleSend"
       :disabled="loading"
@@ -58,8 +60,8 @@ const props = defineProps({
     default: () => [],
   },
   error: {
-    type: String,
-    default: '',
+    type: Boolean,
+    default: false,
   },
 });
 

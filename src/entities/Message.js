@@ -5,6 +5,7 @@ export default class Message extends BaseEntity {
   sender = null;
   message = null;
   articles = [];
+  isErrorMessage = false;
 
   _entityArrayFields = {
     articles: Article,
