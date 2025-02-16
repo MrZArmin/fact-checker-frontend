@@ -35,15 +35,4 @@ export default $request => ({
       useUserStore().logout();
     });
   },
-
-  requestforgottenPassword(email) {
-    return $request.post(`${namespace}/forgotten-password`, { email });
-  },
-
-  forgottenPasswordValidation(email, password, token) {
-    return $request.post(`${namespace}/forgotten-password/${token}`, {
-      email,
-      password,
-    });
-  },
 });
