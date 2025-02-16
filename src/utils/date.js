@@ -1,4 +1,4 @@
-export const isToday = (date) => {
+export const isToday = date => {
   const today = new Date();
   return (
     date.getDate() === today.getDate() &&
@@ -7,12 +7,12 @@ export const isToday = (date) => {
   );
 };
 
-export const isWithinLast7Days = (date) => {
+export const isWithinLast7Days = date => {
   const last7Days = new Date().setDate(new Date().getDate() - 7);
   return date >= last7Days && !isToday(date);
 };
 
-export const isWithinLastMonth = (date) => {
+export const isWithinLastMonth = date => {
   const today = new Date();
   const lastMonth = new Date(today);
   lastMonth.setMonth(today.getMonth() - 1);

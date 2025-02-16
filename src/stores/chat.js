@@ -1,28 +1,29 @@
 import { defineStore } from 'pinia';
+
 import Session from '@/entities/Session.js';
 
 export const useChatStore = defineStore('chat', {
   state: () => ({
     sessions: [],
-    currentSession: null
+    currentSession: null,
   }),
 
   getters: {
-    getCurrentSession: (state) => state.currentSession,
-    getSessions: (state) => state.sessions
+    getCurrentSession: state => state.currentSession,
+    getSessions: state => state.sessions,
   },
 
   actions: {
     initSessions(sessions) {
       sessions.forEach(session => {
         if(!this.findSession(session.id)) {
-          this.sessions.push(new Session(session))
+          this.sessions.push(new Session(session));
         }
       });
     },
 
     setDefault() {
-      this.currentSession = null
+      this.currentSession = null;
     },
 
     setCurrentSession(session) {
@@ -30,7 +31,7 @@ export const useChatStore = defineStore('chat', {
     },
 
     setCurrenSessionFromId(id) {
-      this.currentSession = this.findSession(id)
+      this.currentSession = this.findSession(id);
     },
 
     addSession(sessionData) {
@@ -48,6 +49,6 @@ export const useChatStore = defineStore('chat', {
       if (this.currentSession?.id === sessionId) {
         this.currentSession = null;
       }
-    }
-  }
+    },
+  },
 });

@@ -1,6 +1,13 @@
 .home {
   display: flex;
 
+  .icon {
+    &.hamburger,
+    &.close{
+      cursor: pointer;
+    }
+  }
+
   &.sidebar-open{
     display: block;
 

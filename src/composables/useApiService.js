@@ -1,19 +1,19 @@
 import { toast } from 'vue3-toastify';
-import { useRuntimeConfig } from '@/composables/useRuntimeConfig';
-import { useUserStore } from '@/stores/user';
 
 import apiAuth from '@/api/auth';
-import apiUser from '@/api/user';
 import apiChat from '@/api/chat';
+import apiUser from '@/api/user';
+import { useRuntimeConfig } from '@/composables/useRuntimeConfig';
+import { useUserStore } from '@/stores/user';
 
 const request = (
   requestPath,
   method = 'GET',
   query = undefined,
   body = null,
-  headers = {}
+  headers = {},
 ) => {
-  let config = useRuntimeConfig();
+  const config = useRuntimeConfig();
   const defaultHeaders = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
@@ -27,9 +27,8 @@ const request = (
   // Add query parameters to URL if they exist
   const url = new URL(`${config.apiBaseUrl}${requestPath}`);
   if (query) {
-    Object.keys(query).forEach((key) =>
-      url.searchParams.append(key, query[key])
-    );
+    Object.keys(query).forEach(key =>
+      url.searchParams.append(key, query[key]));
   }
 
   return fetch(url, {
@@ -39,16 +38,16 @@ const request = (
       ...defaultHeaders,
       ...headers,
     },
-    credentials: 'include', // Add this to handle cookies
+    credentials: 'include',
   })
-    .then(async (response) => {
+    .then(async response => {
       const data = await response.json();
       if (!response.ok) {
         throw { status: response.status, data };
       }
       return data;
     })
-    .catch((e) => {
+    .catch(e => {
       if (e.status === 401) {
         console.error('[API] Unauthorized', e.data);
         toast.error('Access Denied.');
@@ -72,9 +71,9 @@ const apiRequests = {
     request(requestPath, 'DELETE', query, body, headers),
 };
 
-const displayValidationErrors = (errorPayload) => {
-  Object.keys(errorPayload).forEach((k) => {
-    for (let errorItem of errorPayload[k]) {
+const displayValidationErrors = errorPayload => {
+  Object.keys(errorPayload).forEach(k => {
+    for (const errorItem of errorPayload[k]) {
       toast.warning(errorItem);
     }
   });

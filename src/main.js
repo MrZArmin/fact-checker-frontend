@@ -1,9 +1,6 @@
 import './assets/scss/styles.scss';
-import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-import { markRaw } from 'vue';
-import App from './App.vue';
-import router from './router';
+import { createApp , markRaw } from 'vue';
 import Vue3Toasity from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import vSelect from 'vue-select';
@@ -26,6 +23,9 @@ import 'vuetify/styles';
 import { createVuetify } from 'vuetify';
 import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
+
+import App from './App.vue';
+import router from './router';
 
 const vuetify = createVuetify({
   components,

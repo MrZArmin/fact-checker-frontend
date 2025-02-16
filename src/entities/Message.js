@@ -1,5 +1,5 @@
-import BaseEntity from '@/entities/BaseEntity';
 import Article from '@/entities/Article';
+import BaseEntity from '@/entities/BaseEntity';
 
 export default class Message extends BaseEntity {
   sender = null;
@@ -9,7 +9,7 @@ export default class Message extends BaseEntity {
 
   _entityArrayFields = {
     articles: Article,
-  }
+  };
 
   constructor(rawData) {
     super();

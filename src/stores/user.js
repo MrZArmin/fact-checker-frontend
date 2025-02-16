@@ -1,5 +1,6 @@
-import { defineStore } from 'pinia';
 import { useCookies } from '@vueuse/integrations/useCookies';
+import { defineStore } from 'pinia';
+
 import { apiService } from '@/composables/useApiService';
 
 export const COOKIE_BEARER_TOKEN_KEY = 'factchecker_token';
@@ -16,26 +17,26 @@ export const useUserStore = defineStore('user', {
   }),
 
   getters: {
-    theAccount: (state) => state.account,
-    theToken: (state) => {
-      const cookies = useCookies()
-      const token = cookies.get(COOKIE_BEARER_TOKEN_KEY)
+    theAccount: state => state.account,
+    theToken: state => {
+      const cookies = useCookies();
+      const token = cookies.get(COOKIE_BEARER_TOKEN_KEY);
       // Return raw token without 'Bearer ' prefix
-      return token ? token.replace('Bearer ', '') : state.token
+      return token ? token.replace('Bearer ', '') : state.token;
     },
-    isUserFetched: (state) => state.userFetched,
-    isAnonymous: (state) => !state.token || !state.account,
+    isUserFetched: state => state.userFetched,
+    isAnonymous: state => !state.token || !state.account,
     isLoggedIn: () => {
       // Move cookie initialization inside the getter
       const cookies = useCookies();
       const token = cookies.get(COOKIE_BEARER_TOKEN_KEY);
       return typeof token === 'string' && token.length > 0;
     },
-    isAdmin: (state) => 
-      state.account?.user_type?.machine_name === 'admin' || 
+    isAdmin: state =>
+      state.account?.user_type?.machine_name === 'admin' ||
       state.account?.user_type?.machine_name === 'owner',
-    getUsers: (state) => state.users,
-    getDeletedUsers: (state) => state.deletedUsers,
+    getUsers: state => state.users,
+    getDeletedUsers: state => state.deletedUsers,
   },
 
   actions: {
@@ -52,7 +53,7 @@ export const useUserStore = defineStore('user', {
           token: localStorage.getItem('token'),
           token_type: localStorage.getItem('token_type'),
           expires_in: parseInt(localStorage.getItem('token_expires_in') || '0', 10),
-          token_created: parseInt(localStorage.getItem('token_created') || '0', 10)
+          token_created: parseInt(localStorage.getItem('token_created') || '0', 10),
         };
 
         if (this.isTokenExpired(storedData.token_created, storedData.expires_in)) {
@@ -61,7 +62,8 @@ export const useUserStore = defineStore('user', {
         }
 
         Object.assign(this, storedData);
-      } catch (e) {
+      }
+      catch (e) {
         console.error('Error initializing user store:', e);
         this.logout();
         this.init();
@@ -69,7 +71,9 @@ export const useUserStore = defineStore('user', {
     },
 
     isTokenExpired(tokenCreated, expiresIn) {
-      if (!tokenCreated || !expiresIn) return true;
+      if (!tokenCreated || !expiresIn) {
+        return true;
+      }
       const expirationTime = tokenCreated + (expiresIn * 1000);
       return Date.now() > expirationTime;
     },
@@ -77,7 +81,7 @@ export const useUserStore = defineStore('user', {
     clearStorageAndState() {
       const cookies = useCookies();
       cookies.remove(COOKIE_BEARER_TOKEN_KEY, { path: '/' });
-      
+
       localStorage.removeItem('account');
       localStorage.removeItem('token');
       localStorage.removeItem('token_type');
@@ -108,7 +112,8 @@ export const useUserStore = defineStore('user', {
           this.account = resp.payload;
         }
         return resp;
-      } catch (error) {
+      }
+      catch (error) {
         console.error('Error fetching user:', error);
         throw error;
       }
@@ -117,13 +122,13 @@ export const useUserStore = defineStore('user', {
     login(data) {
       const { user, access_token, token_type, expires_in } = data;
       const cookies = useCookies();
-      
+
       // Update state
       Object.assign(this, {
         account: user,
         token: access_token,
         token_type,
-        expires_in
+        expires_in,
       });
 
       // Update localStorage
@@ -134,10 +139,10 @@ export const useUserStore = defineStore('user', {
       localStorage.setItem('token_created', Date.now().toString());
 
       // Set cookie
-      cookies.set(COOKIE_BEARER_TOKEN_KEY, access_token, { 
-        path: '/', 
+      cookies.set(COOKIE_BEARER_TOKEN_KEY, access_token, {
+        path: '/',
         secure: true,
-        maxAge: expires_in 
+        maxAge: expires_in,
       });
     },
 
@@ -148,12 +153,12 @@ export const useUserStore = defineStore('user', {
     },
 
     setToken(value) {
-      this.token = value
+      this.token = value;
 
-      const cookies = useCookies()
-      cookies.set(COOKIE_BEARER_TOKEN_KEY, this.token, { path: '/', secure: true })
+      const cookies = useCookies();
+      cookies.set(COOKIE_BEARER_TOKEN_KEY, this.token, { path: '/', secure: true });
     },
-  }
+  },
 });
 
 export default useUserStore;

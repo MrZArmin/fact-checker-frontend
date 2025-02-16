@@ -1,22 +1,22 @@
 <template>
-  <VueFinalModal
+  <vue-final-modal
     :model-value="isModalOpen"
-    @update:model-value="$emit('update:isModalOpen', $event)"
     class="modal-container"
     content-class="modal-content"
+    @update:model-value="$emit('update:isModalOpen', $event)"
     @click-outside="handleClose"
   >
     <div class="modal-header">
       <div class="tabs-container">
-        <div 
-          v-for="(article, index) in articles" 
+        <div
+          v-for="(article, index) in articles"
           :key="index"
           class="tab"
           :class="{ active: activeTab === index }"
           @click="activeTab = index"
         >
           <span class="tab-title">{{ article.title }}</span>
-          <span 
+          <span
             class="similarity-score"
             :style="{ backgroundColor: getSimilarityColor(article.similarity_score) }"
           >
@@ -27,57 +27,61 @@
       <div class="close-button" @click="handleClose">×</div>
     </div>
 
-    <div class="modal-body" v-if="currentArticle">
+    <div v-if="currentArticle" class="modal-body">
       <h2>{{ currentArticle.title }}</h2>
       <p class="lead">{{ currentArticle.lead }}</p>
       <div class="article-text">{{ currentArticle.text }}</div>
-      <a 
-        :href="currentArticle.link" 
-        target="_blank" 
+      <a
+        :href="currentArticle.link"
+        target="_blank"
         rel="noopener noreferrer"
         class="original-link"
       >
         Eredeti cikk
       </a>
     </div>
-  </VueFinalModal>
+  </vue-final-modal>
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
-import { VueFinalModal } from 'vue-final-modal'
+import { computed, ref, watch } from 'vue';
+import { VueFinalModal } from 'vue-final-modal';
 
 const props = defineProps({
   articles: {
     type: Array,
     required: true,
-    default: () => []
+    default: () => [],
   },
   isModalOpen: {
     type: Boolean,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 
-const emit = defineEmits(['close', 'update:isModalOpen'])
+const emit = defineEmits([ 'close', 'update:isModalOpen' ]);
 
-const activeTab = ref(0)
+const activeTab = ref(0);
 
-const currentArticle = computed(() => props.articles[activeTab.value])
+const currentArticle = computed(() => props.articles[activeTab.value]);
 
 // Reset active tab when articles change
 watch(() => props.articles, () => {
-  activeTab.value = 0
-})
+  activeTab.value = 0;
+});
 
 const handleClose = () => {
-  emit('update:isModalOpen', false)
-  emit('close')
-}
+  emit('update:isModalOpen', false);
+  emit('close');
+};
 
-const getSimilarityColor = (score) => {
-  if (score >= 0.8) return '#4CAF50'
-  if (score >= 0.6) return '#FFC107'
-  return '#F44336'
-}
+const getSimilarityColor = score => {
+  if (score >= 0.8) {
+    return '#4CAF50';
+  }
+  if (score >= 0.6) {
+    return '#FFC107';
+  }
+  return '#F44336';
+};
 </script>

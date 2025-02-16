@@ -1,5 +1,4 @@
-export default class BaseEntity
-{
+export default class BaseEntity {
   _entityFields = {};
   _entityArrayFields = {};
 
@@ -14,7 +13,7 @@ export default class BaseEntity
       return false;
     }
 
-    for (const [key, value] of Object.entries(newValues)) {
+    for (const [ key, value ] of Object.entries(newValues)) {
       if (!(key in this)) {
         continue;
       }
@@ -27,7 +26,7 @@ export default class BaseEntity
         const cls = this._entityFields[key];
         this[key] = new cls(value);
       }
-      else if (['created_at', 'updated_at', 'deleted_at'].includes(key) && !!value) {
+      else if ([ 'created_at', 'updated_at', 'deleted_at' ].includes(key) && !!value) {
         this[key] = new Date(value);
       }
       else {
@@ -47,7 +46,7 @@ export default class BaseEntity
   }
 
   toObject() {
-    let data = JSON.parse(JSON.stringify(this, (key, value) => {
+    const data = JSON.parse(JSON.stringify(this, (key, value) => {
       if (key[0] === '_') {
         return undefined;
       }
@@ -62,13 +61,13 @@ export default class BaseEntity
       }
 
       let value = data[key];
-      let currentValue = this[key];
+      const currentValue = this[key];
 
       if (currentValue instanceof BaseEntity) {
         value = currentValue.toObject();
       }
       else if (Array.isArray(value)) {
-        let newValue = [];
+        const newValue = [];
         for (let i = 0; i < value.length; ++i) {
           const item = currentValue[i];
           if (item instanceof BaseEntity) {

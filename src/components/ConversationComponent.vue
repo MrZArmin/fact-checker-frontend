@@ -1,5 +1,5 @@
 <template>
-  <div class="conversation" ref="conversation">
+  <div ref="conversation" class="conversation">
     <div v-if="messages.length" class="conversation-wrapper">
       <ol>
         <li
@@ -33,11 +33,11 @@
     </div>
     <i v-else class="icon loader white"></i>
     <Input
-      @send="handleSend"
       :disabled="loading"
       :placeholder="inputPlaceholder"
+      @send="handleSend"
     />
-    <ArticleModal
+    <article-modal
       v-model:isModalOpen="isArticleModalOpen"
       :articles="selectedArticles"
       @close="isArticleModalOpen = false"
@@ -46,7 +46,8 @@
 </template>
 
 <script setup>
-import { ref, watch, nextTick, onMounted } from 'vue';
+import { nextTick, onMounted, ref, watch } from 'vue';
+
 import ArticleModal from '@/components/ArticleModal.vue';
 import Input from '@/components/InputComponent.vue';
 
@@ -65,13 +66,12 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['send']);
+const emit = defineEmits([ 'send' ]);
 const conversation = ref(null);
 const inputPlaceholder = ref('Type your message...');
 const isArticleModalOpen = ref(false);
 const selectedArticles = ref([]);
 
-// Watch for new messages and scroll to bottom
 watch(
   () => props.messages,
   (newMessages, oldMessages) => {
@@ -79,28 +79,26 @@ watch(
       scrollToBottom();
     }
   },
-  { deep: true }
+  { deep: true },
 );
 
-// Watch for loading state changes
 watch(
   () => props.loading,
-  (isLoading) => {
+  isLoading => {
     inputPlaceholder.value = isLoading
       ? 'Please wait...'
       : 'Type your message...';
     if (!isLoading) {
       scrollToBottom();
     }
-  }
+  },
 );
 
-// Initial scroll to bottom when mounted
 onMounted(() => {
   scrollToBottom();
 });
 
-const handleSend = (text) => {
+const handleSend = text => {
   if (text.trim() && !props.loading) {
     emit('send', text);
   }
@@ -115,8 +113,8 @@ const scrollToBottom = () => {
   });
 };
 
-const openArticleModal = (articles) => {
-  selectedArticles.value = articles;
+const openArticleModal = articles => {
+  selectedArticles.value = articles.sort((a, b) => b.similarity_score - a.similarity_score);
   isArticleModalOpen.value = true;
 };
 </script>

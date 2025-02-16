@@ -20,8 +20,8 @@
           />
           <button
             class="auth-form-button"
-            @click="submit()"
             :disabled="isLoading"
+            @click="submit()"
           >
             <i v-if="isLoading" class="icon loader white"></i>
             <span v-else>Belépés</span>
@@ -33,10 +33,12 @@
 </template>
 
 <script setup>
+
 import { ref } from 'vue';
+import { toast } from 'vue3-toastify';
+
 import { apiService } from '@/composables/useApiService';
 import { useUserStore } from '@/stores/user';
-import { toast } from 'vue3-toastify';
 
 const username = ref('');
 const password = ref('');
@@ -56,13 +58,16 @@ const submit = async () => {
       userStore.login(resp.payload);
       await userStore.fetchMe(true);
       window.location = '/';
-    } else {
+    }
+    else {
       toast.error('Sikertelen bejelentkezés, hibás adatok!');
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Login error:', error);
     toast.error('Hiba történt a bejelentkezés során.');
-  } finally {
+  }
+  finally {
     isLoading.value = false;
   }
 };

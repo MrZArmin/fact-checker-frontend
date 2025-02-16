@@ -2,12 +2,12 @@ import { useUserStore } from '@/stores/user';
 
 const namespace = 'auth';
 
-export default ($request) => ({
+export default $request => ({
   signup({ hash, email, password, username }) {
     if (hash) {
       return $request
         .post(`${namespace}/invitation/${hash}`, { password, email, username })
-        .then((resp) => {
+        .then(resp => {
           const userStore = useUserStore();
           userStore.login(resp.payload);
 
@@ -22,7 +22,7 @@ export default ($request) => ({
         username,
         password,
       })
-      .then((resp) => {
+      .then(resp => {
         const userStore = useUserStore();
         userStore.login(resp.payload);
 

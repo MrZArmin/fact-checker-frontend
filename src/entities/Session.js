@@ -8,10 +8,10 @@ export default class Session extends BaseEntity {
   updated_at = null;
   created_at = null;
   isLoading = false;
-  
+
   _entityArrayFields = {
     messages: Message,
-  }
+  };
 
   constructor(rawData) {
     super();

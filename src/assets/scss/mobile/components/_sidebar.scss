@@ -2,6 +2,10 @@
   display: none;
   width: 100dvw;
 
+  .icon {
+    cursor: pointer;
+  }
+
   &.open{
     display: block;
   }

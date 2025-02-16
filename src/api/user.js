@@ -1,6 +1,6 @@
-const namespace = 'user'
+const namespace = 'user';
 
-export default ($request) => ({
+export default $request => ({
 
   me() {
     return $request.get('me/');
@@ -22,5 +22,5 @@ export default ($request) => ({
     return $request.delete(`${namespace}/${id}`);
   },
 
-})
+});
 

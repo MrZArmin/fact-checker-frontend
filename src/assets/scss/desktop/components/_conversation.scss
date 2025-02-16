@@ -22,7 +22,7 @@
   ol {
     list-style: none;
     margin: 10px auto;
-    padding-bottom: 10px;
+    padding-bottom: 25px;
 
     li {
       border-radius: 20px;
@@ -31,7 +31,7 @@
         display: flex;
         padding: 10px 20px;
         margin: 5px 0px;
-        word-break: break-word; /* Alternative for modern browsers */
+        word-break: break-word;
 
         .icon {
           min-width: 18px;

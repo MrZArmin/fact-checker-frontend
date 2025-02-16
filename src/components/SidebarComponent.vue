@@ -1,11 +1,11 @@
 <template>
   <div class="sidebar">
     <div class="sidebar-icons">
-      <i @click="handleLogout" class="icon exit white large" />
+      <i class="icon exit white large" @click="handleLogout" />
       <i
         v-if="canOpenNewConversation"
-        @click="handleAddNewConversation"
         class="icon add white large"
+        @click="handleAddNewConversation"
       />
     </div>
 
@@ -25,15 +25,15 @@
           <li
             v-for="item in todaysChats"
             :key="item.id"
-            @click="handleOpenConversation(item.id)"
             :class="{ active: currentConversationId === item.id }"
+            @click="handleOpenConversation(item.id)"
           >
             <div class="sidebar-history-text" :title="item.title">
               {{ item.title }}
             </div>
             <i
-              @click.stop="handleDeleteConversation(item.id)"
               class="icon delete white"
+              @click.stop="handleDeleteConversation(item.id)"
             />
           </li>
         </ul>
@@ -45,15 +45,15 @@
           <li
             v-for="item in last7DaysChats"
             :key="item.id"
-            @click="handleOpenConversation(item.id)"
             :class="{ active: currentConversationId === item.id }"
+            @click="handleOpenConversation(item.id)"
           >
             <div class="sidebar-history-text" :title="item.title">
               {{ item.title }}
             </div>
             <i
-              @click.stop="handleDeleteConversation(item.id)"
               class="icon delete white"
+              @click.stop="handleDeleteConversation(item.id)"
             />
           </li>
         </ul>
@@ -65,15 +65,15 @@
           <li
             v-for="item in lastMonthOrOlderChats"
             :key="item.id"
-            @click="handleOpenConversation(item.id)"
             :class="{ active: currentConversationId === item.id }"
+            @click="handleOpenConversation(item.id)"
           >
             <div class="sidebar-history-text" :title="item.title">
               {{ item.title }}
             </div>
             <i
-              @click.stop="handleDeleteConversation(item.id)"
               class="icon delete white"
+              @click.stop="handleDeleteConversation(item.id)"
             />
           </li>
         </ul>
@@ -84,7 +84,8 @@
 
 <script setup>
 import { computed } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
+
 import { apiService } from '@/composables/useApiService';
 import { useUserStore } from '@/stores/user';
 import { isToday, isWithinLast7Days, isWithinLastMonth } from '@/utils/date';
@@ -110,28 +111,26 @@ const canOpenNewConversation = computed(() => (route.params.id ? true : false));
 
 const todaysChats = computed(() =>
   props.items
-    .filter((item) => isToday(new Date(item.updated_at)))
-    .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
-);
+    .filter(item => isToday(new Date(item.updated_at)))
+    .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at)));
 
 const last7DaysChats = computed(() =>
   props.items
-    .filter((item) => isWithinLast7Days(new Date(item.updated_at)))
-    .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
-);
+    .filter(item => isWithinLast7Days(new Date(item.updated_at)))
+    .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at)));
 
 const lastMonthOrOlderChats = computed(() =>
   props.items
-    .filter((item) => isWithinLastMonth(new Date(item.updated_at)))
-    .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
-);
+    .filter(item => isWithinLastMonth(new Date(item.updated_at)))
+    .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at)));
 
 const handleLogout = async () => {
   try {
     await apiService.auth.logout();
     userStore.logout();
     router.replace('/login');
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Logout failed:', error);
   }
 };
@@ -141,25 +140,24 @@ const handleAddNewConversation = () => {
   emit('add-new-conversation');
 };
 
-const handleOpenConversation = (id) => {
+const handleOpenConversation = id => {
   if (currentConversationId.value !== id) {
     router.push(`/${id}`);
-    emit('open-conversation', id);
   }
+  emit('open-conversation', id);
 };
 
-const handleDeleteConversation = async (id) => {
+const handleDeleteConversation = async id => {
   try {
-    // Show confirmation dialog
     if (confirm('Are you sure you want to delete this conversation?')) {
       emit('delete-conversation', id);
 
-      // If we're deleting the current conversation, redirect to new
       if (currentConversationId.value === id) {
         router.push('/new');
       }
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Error deleting conversation:', error);
   }
 };

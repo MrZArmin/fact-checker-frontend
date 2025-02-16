@@ -1,15 +1,13 @@
 <template>
   <div class="main-content">
     <RouterView />
-    <ModalsContainer />
   </div>
 </template>
 
 <script>
-import { useUserStore } from '@/stores/user';
-import { useChatStore } from '@/stores/chat';
 import { apiService } from '@/composables/useApiService';
-import { ModalsContainer } from 'vue-final-modal'
+import { useChatStore } from '@/stores/chat';
+import { useUserStore } from '@/stores/user';
 
 export default {
   name: 'App',
@@ -27,15 +25,15 @@ export default {
       if (this.$route.params.id) {
         chatStore.setCurrenSessionFromId(this.$route.params.id);
       }
-      
+
       const meResponse = await userStore.fetchMe(true);
       if (meResponse.payload) {
         userStore.init();
       }
 
       userStore.init();
-
-    } catch (e) {
+    }
+    catch (e) {
       console.error('[App] Failed to fetch user', e);
     }
   },
