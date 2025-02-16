@@ -1,4 +1,4 @@
-# Tényellenőrző Rendszer Frontend Dokumentáció
+# FactChecker Rendszer Frontend Dokumentáció
 
 ## Bevezetés
 
