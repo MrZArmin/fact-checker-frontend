@@ -1,7 +1,7 @@
 <template>
   <div ref="conversation" class="conversation">
     <div v-if="messages.length" class="conversation-wrapper">
-      <ol>
+      <ol class="conversation-list">
         <li
           v-for="(message, index) in messages"
           :key="index"
